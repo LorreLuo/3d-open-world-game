@@ -1,0 +1,36 @@
+---
+alwaysApply: true
+---
+
+## Git 自动化规范
+
+当我说"提交"、"commit"、"推送"、"push"时，按以下步骤执行：
+
+### 提交流程
+1. 运行 git status 和 git diff 分析所有改动
+2. 根据改动内容自动生成 commit 信息，格式如下：
+   feat(scope): 新功能描述
+   fix(scope): bug修复描述
+   art(scope): 美术资产更新
+   audio(scope): 音频文件更新
+   refactor(scope): 代码重构
+   perf(scope): 性能优化
+   test(scope): 测试相关
+   docs(scope): 文档更新
+3. 只 add 本次相关的文件，不要 git add .
+4. git commit -m "生成的信息"
+5. git push origin 当前分支名
+
+### 禁止提交的目录
+Library/ Temp/ Logs/ .DS_Store UserSettings/
+
+### 分支规范
+- main：受保护，只接受合并，不直接推送
+- develop：日常开发集成分支
+- feature/功能名：新功能开发完成后合并到 develop
+- hotfix/问题名：紧急修复直接合并到 main
+
+### 常用指令映射
+"创建新功能分支" → git checkout -b feature/功能名 develop
+"合并到develop" → git checkout develop && git merge feature/当前分支 && git push
+"查看历史" → git log --oneline --graph -10
