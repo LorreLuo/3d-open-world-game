@@ -18,6 +18,8 @@ public class SelectionManager : MonoBehaviour
     public Image centerDotImage;
     public Image handIcon;
 
+    public bool handIsVisable;
+
     private void Start()
     {
         onTarget = false;
@@ -72,11 +74,15 @@ public class SelectionManager : MonoBehaviour
                 {
                     centerDotImage.gameObject.SetActive(false);
                     handIcon.gameObject.SetActive(true);
+
+                    handIsVisable = true;
                 }
                 else
                 {
                     centerDotImage.gameObject.SetActive(true);
                     handIcon.gameObject.SetActive(false);
+                    
+                    handIsVisable = false;
                 }
 
             }
@@ -88,6 +94,8 @@ public class SelectionManager : MonoBehaviour
 
                 centerDotImage.gameObject.SetActive(true);
                 handIcon.gameObject.SetActive(false);
+
+                handIsVisable = false;
             }
         }
         else
@@ -98,6 +106,8 @@ public class SelectionManager : MonoBehaviour
 
             centerDotImage.gameObject.SetActive(true);
             handIcon.gameObject.SetActive(false);
+
+            handIsVisable = false;
         }
     }
 

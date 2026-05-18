@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1f5f698961a00e4daa26d52351aa649, type: 3}
+  m_Name: New AbilityEntry_77c30dd2_20260518185918
+  m_EditorClassIdentifier: Spark.Combat::AbilityEntry
+  id: 77c30dd2_20260518185918
+  entryName: New AbilityEntry
+  displayName: New AbilityEntry
+  description: 
+  icon: {fileID: 0}
+  cooldown: 0
+  startGlobalCooldown: 1
+  globalCooldownTime: 0.5
+  ignoreGlobalCooldown: 0
+  startupDuration: 0.2
+  activeDuration: 0.3
+  recoveryDuration: 0.4
+  rotateTowardsCameraOnCast: 1
+  activationType: {fileID: 0}
+  activationTypeData: {fileID: 0}
+  revalidateOnIncantationComplete: 0
+  cacheTargetOnIncantation: 1
+  enterCombat: 0
+  combatLockDuration: 3
+  abilityType: {fileID: 0}
+  abilityTypeData: {fileID: 0}
+  costs: []
+  effectInstances: []
+  effectDataList: []
+  casterEffectInstances: []
+  casterEffectDataList: []
+  applyRules:
+    ruleAppliedList: {fileID: 0}
+    ruleAppliedTriggers: []
+  checkRules:
+    ruleCheckList: {fileID: 0}
+    ruleChecks: []
+  requirements: []
+  enableMotionWarp: 0
+  maxWarpRange: 3
+  warpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  warpDuration: 0
+  stopDistance: 1.5
+  searchAngle: 150
+  requireLineOfSight: 1
+  enableRootMotionFallback: 0
+  rootMotionFallbackDelay: 0
+  rootMotionFallbackDuration: 0.5
+  animations: []
+  sounds: []
+  gameObjects: []
+  tooltipTemplate: 
+  keywordMappings: []
+  references:
+    version: 2
+    RefIds: []

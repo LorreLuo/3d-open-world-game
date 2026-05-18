@@ -19,6 +19,10 @@ public class EquipSystem : MonoBehaviour
     public int selectedNumber = -1;
     //public GameObject selectedSlot;
     public GameObject selectedItem;
+
+    public GameObject toolHolder;
+
+    public GameObject selectedItemModel;
    
     private void Awake()
     {
@@ -92,8 +96,10 @@ public class EquipSystem : MonoBehaviour
                     selectedItem.GetComponent<InventoryItem>().isSelected = false;
                 }
                 //选择物品
-                selectedItem = getSelectedItem(number);
+                selectedItem = GetSelectedItem(number);
                 selectedItem.GetComponent<InventoryItem>().isSelected = true;
+
+                SetEquippedModel(selectedItem);
 
                 //修改颜色
                 SetAllNumberColors(Color.gray);
@@ -110,12 +116,53 @@ public class EquipSystem : MonoBehaviour
                     selectedItem = null;
                 }
 
+                if(selectedItemModel != null)
+                {
+                    DestroyImmediate(selectedItemModel.gameObject);
+                    selectedItemModel = null;
+                }
+
                 //修改颜色
                 SetAllNumberColors(Color.gray);
             }
             
         }
         
+    }
+
+    /// <summary>
+    /// 设置装备模型
+    /// </summary>
+    /// <param name="item"></param>
+    private void SetEquippedModel(GameObject selectedItem)
+    {
+        //清除之前的模型
+        if(selectedItemModel != null)
+        {
+            DestroyImmediate(selectedItemModel.gameObject);
+            selectedItemModel = null;
+        }
+
+        string selectedItemName = selectedItem.name.Replace("(Clone)", "").Trim();
+        string resourcePath = selectedItemName + "_model";
+        Debug.Log($"[EquipSystem] Trying to load: '{resourcePath}'");
+
+        GameObject prefab = Resources.Load<GameObject>(resourcePath);
+        if (prefab == null)
+        {
+            Debug.LogError($"[EquipSystem] Resources.Load failed: '{resourcePath}' not found. Make sure the prefab is inside a Resources folder and the name matches exactly.");
+            return;
+        }
+
+        // 清除之前的模型
+        foreach (Transform child in toolHolder.transform)
+            Destroy(child.gameObject);
+
+        selectedItemModel = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        selectedItemModel.transform.SetParent(toolHolder.transform, false);
+        selectedItemModel.transform.localPosition = new Vector3(0.47f, 0.44f, 1.29f);
+        selectedItemModel.transform.localRotation = Quaternion.Euler(19.667f, 88.406f, 3.71f);
+        Debug.Log($"[EquipSystem] Spawned model '{resourcePath}' under '{toolHolder.name}'");
     }
 
     private void SetAllNumberColors(Color color)
@@ -146,7 +193,7 @@ public class EquipSystem : MonoBehaviour
             tmp.color = color;
     }
 
-    GameObject getSelectedItem(int slotNumber)
+    GameObject GetSelectedItem(int slotNumber)
     {
         return quickSlotsList[slotNumber-1].transform.GetChild(0).gameObject;
     }
@@ -184,7 +231,8 @@ public class EquipSystem : MonoBehaviour
         itemToEquip.transform.SetParent(availableSlot.transform, false);
         // Getting clean name
         string cleanName = itemToEquip.name.Replace("(Clone)", "");
-       
+ 
+        InventorySystem.Instance.ReCalculateList();
  
     }
  
