@@ -1,4 +1,4 @@
-# SP0 工程地基 Implementation Plan
+﻿# SP0 工程地基 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -1128,7 +1128,7 @@ namespace Game.Editor
             AssetDatabase.CopyAsset(SourceAnimator, TargetAnimator);
             AssetDatabase.ImportAsset(TargetPrefab);
 
-            var controller = AnimatorController.LoadAnimatorControllerAtPath(TargetAnimator);
+            var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(TargetAnimator);
             AddSparkParameters(controller);
 
             // 读取旧 prefab 中待迁移的序列化字段
@@ -2466,3 +2466,4 @@ git merge --no-ff feature/sp0-foundation -m "sp0: 工程地基完成（_Game/玩
 - [ ] PlayMode 测试 4 例全绿；Compile/Build 均通过
 - [ ] 全部代码命名空间化；桥接边界（Game.Bridge）清晰；Spark/UIS/Samples 源码零修改
 - [ ] `main` 分支历史清晰（12 个 `sp0:` 提交）
+
