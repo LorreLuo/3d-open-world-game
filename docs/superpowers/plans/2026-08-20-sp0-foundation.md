@@ -1173,7 +1173,8 @@ namespace Game.Editor
             }
             tpcSo.ApplyModifiedPropertiesWithoutUndo();
 
-            var playerInput = root.AddComponent<PlayerInput>();
+            var playerInput = root.GetComponent<PlayerInput>();
+            if (playerInput == null) { playerInput = root.AddComponent<PlayerInput>(); }
             playerInput.actions = AssetDatabase.LoadAssetAtPath<InputActionAsset>(ThirdPersonInput);
             playerInput.defaultActionMap = "Player";
             playerInput.notificationBehavior = PlayerNotifications.SendMessages;
@@ -2466,4 +2467,5 @@ git merge --no-ff feature/sp0-foundation -m "sp0: 工程地基完成（_Game/玩
 - [ ] PlayMode 测试 4 例全绿；Compile/Build 均通过
 - [ ] 全部代码命名空间化；桥接边界（Game.Bridge）清晰；Spark/UIS/Samples 源码零修改
 - [ ] `main` 分支历史清晰（12 个 `sp0:` 提交）
+
 
