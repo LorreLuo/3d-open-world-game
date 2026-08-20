@@ -1,0 +1,21 @@
+{
+    "name": "Game.Bridge",
+    "rootNamespace": "Game.Bridge",
+    "references": [
+        "GUID:00a66b3abbb477b42bd871e52fef35d5",
+        "GUID:7b702ed6fdc641b46abf81d48b50e313",
+        "GUID:87b6ca17a960fac4cab63d31c340cac6",
+        "GUID:33948188067f67944b82252675cf09c3",
+        "GUID:d8e89a79cd8df8848b5d3356783eb74",
+        "GUID:096d6c1262816c04ca09d7ae1d201d8a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
