@@ -68,7 +68,7 @@ MonoBehaviour:
   m_text: "\u4EA4\u4E92"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b4b49f775a066f5438dd6f0a59f80f9c, type: 2}
-  m_sharedMaterial: {fileID: -5771406513741659988, guid: b4b49f775a066f5438dd6f0a59f80f9c, type: 2}
+  m_sharedMaterial: {fileID: -996418146973747508, guid: b4b49f775a066f5438dd6f0a59f80f9c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -168,7 +168,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3087049278072470320}
+  - {fileID: 6406946898576960745}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -324,7 +324,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3087049278072470320}
+  - component: {fileID: 6406946898576960745}
   - component: {fileID: 1695321076451289684}
   m_Layer: 0
   m_Name: InteractablesManager
@@ -333,14 +333,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3087049278072470320
-Transform:
+--- !u!224 &6406946898576960745
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6981149877339389451}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -349,6 +348,11 @@ Transform:
   - {fileID: 3291569209375146282}
   m_Father: {fileID: 1190866792623662664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1695321076451289684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,7 +370,7 @@ MonoBehaviour:
   objectNameText: {fileID: 8471183109876867081}
   nameBackground: {fileID: 5675866306751492834}
   indicatorPrefab: {fileID: 6599485965853722954, guid: 27997ec5edc0e0147b280a0dbd99e3d5, type: 3}
-  indicatorsContainer: {fileID: 3087049278072470320}
+  indicatorsContainer: {fileID: 6406946898576960745}
   initialPoolSize: 15
   maxPoolSize: 50
 --- !u!1 &8604469964648098814
@@ -437,7 +441,7 @@ MonoBehaviour:
   m_text: E
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b4b49f775a066f5438dd6f0a59f80f9c, type: 2}
-  m_sharedMaterial: {fileID: -5771406513741659988, guid: b4b49f775a066f5438dd6f0a59f80f9c, type: 2}
+  m_sharedMaterial: {fileID: -996418146973747508, guid: b4b49f775a066f5438dd6f0a59f80f9c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -613,7 +617,7 @@ RectTransform:
   m_Children:
   - {fileID: 5675866306751492834}
   - {fileID: 2761907964698662850}
-  m_Father: {fileID: 3087049278072470320}
+  m_Father: {fileID: 6406946898576960745}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
