@@ -801,12 +801,23 @@ namespace Game.Editor
         [MenuItem("Game/Build/UI Prefabs (Font/Camera/Loading/Interaction)")]
         public static void BuildAll()
         {
+            EnsureFolder("Assets/_Game/Prefabs/Camera");
+            EnsureFolder("Assets/_Game/Prefabs/UI");
             var font = EnsureCjkFont();
             BuildCameraRig();
             BuildLoadingScreen(font);
             BuildInteractionCanvas(font);
             AssetDatabase.SaveAssets();
             Debug.Log("UI_PREFABS_DONE");
+        }
+
+        static void EnsureFolder(string path)
+        {
+            if (AssetDatabase.IsValidFolder(path)) { return; }
+            var parent = System.IO.Path.GetDirectoryName(path).Replace('\\', '/');
+            var leaf = System.IO.Path.GetFileName(path);
+            if (!AssetDatabase.IsValidFolder(parent)) { EnsureFolder(parent); }
+            AssetDatabase.CreateFolder(parent, leaf);
         }
 
         static void BuildCameraRig()
@@ -1519,6 +1530,9 @@ namespace Game.Editor
         [MenuItem("Game/Build/MainMenu Scene")]
         public static void Build()
         {
+            if (!AssetDatabase.IsValidFolder("Assets/_Game/Scenes")) {
+                AssetDatabase.CreateFolder("Assets/_Game", "Scenes");
+            }
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
             // 相机
@@ -2344,30 +2358,9 @@ namespace Game.Tests
 }
 ```
 
-- [ ] **Step 2: 运行测试**
+- [ ] **Step 2: 配置构建场景（PlayMode 测试按场景名加载，必须先于测试配置）**
 
-Run: `pwsh -File tools/unity.ps1 -Action TestPlay`
-Expected: `OK: TestPlay 通过`（`TestResults/playmode.xml` 中 4 个用例全 Passed；若失败按断言信息修复对应产物，修复后重跑生成器/迁移器再重跑测试）。
-
-- [ ] **Step 3: 提交**
-
-```powershell
-git add Assets/_Game/Tests/ TestResults/playmode.xml
-git commit -m "sp0: PlayMode 冒烟测试套件（场景切换/玩家栈/规则/商店桥接）"
-```
-
----
-
-### Task 12: 构建配置与 PC 构建冒烟
-
-**Files:**
-- Modify: `Assets/_Game/Editor/Verification/ProjectVerifier.cs`（追加 `ConfigureBuildSettings` 方法）
-- Modify: `ProjectSettings/EditorBuildSettings.asset`（经脚本修改）
-
-**Interfaces:**
-- Produces: 构建列表 = [MainMenu, GameWorld]（SampleScene 移除）；`Builds/SparkUISDemo/SparkUISDemo.exe` 构建成功。
-
-- [ ] **Step 1: 在 `ProjectVerifier.cs` 中追加方法**
+先在 `Assets/_Game/Editor/Verification/ProjectVerifier.cs` 追加方法：
 
 ```csharp
         [MenuItem("Game/Verify/Configure Build Settings")]
@@ -2382,7 +2375,7 @@ git commit -m "sp0: PlayMode 冒烟测试套件（场景切换/玩家栈/规则/
         }
 ```
 
-- [ ] **Step 2: 执行配置**
+执行：
 
 ```powershell
 pwsh -File tools/unity.ps1 -Action Compile
@@ -2392,12 +2385,35 @@ $unity = if ($env:UNITY_PATH) { $env:UNITY_PATH } else { "C:\Program Files\Unity
 
 Expected: 日志含 `BUILD_SETTINGS_DONE`；`git diff ProjectSettings/EditorBuildSettings.asset` 只含两个新场景。
 
-- [ ] **Step 3: PC 构建**
+- [ ] **Step 3: 运行测试**
+
+Run: `pwsh -File tools/unity.ps1 -Action TestPlay`
+Expected: `OK: TestPlay 通过`（`TestResults/playmode.xml` 中 4 个用例全 Passed；若失败按断言信息修复对应产物，修复后重跑生成器/迁移器再重跑测试）。
+
+- [ ] **Step 4: 提交**
+
+```powershell
+git add Assets/_Game/Tests/ TestResults/playmode.xml Assets/_Game/Editor/Verification/ProjectVerifier.cs ProjectSettings/EditorBuildSettings.asset
+git commit -m "sp0: PlayMode 冒烟测试套件（场景切换/玩家栈/规则/商店桥接）"
+```
+
+---
+
+### Task 12: PC 构建冒烟与收尾
+
+**Files:**
+- Modify: `ProjectSettings/EditorBuildSettings.asset`（已在 Task 11 配置）
+- Produces: `Builds/SparkUISDemo/SparkUISDemo.exe`
+
+**Interfaces:**
+- Consumes: Task 11 的构建场景配置与全绿测试。
+
+- [ ] **Step 1: PC 构建**
 
 Run: `pwsh -File tools/unity.ps1 -Action Build`
 Expected: `OK: Build 通过`；`Builds/SparkUISDemo/SparkUISDemo.exe` 存在。
 
-- [ ] **Step 4: 全量回归**
+- [ ] **Step 2: 全量回归**
 
 ```powershell
 pwsh -File tools/unity.ps1 -Action Compile
@@ -2406,7 +2422,7 @@ pwsh -File tools/unity.ps1 -Action TestPlay
 
 Expected: 全部 `OK`。
 
-- [ ] **Step 5: 人工验收清单（打开编辑器逐一确认）**
+- [ ] **Step 3: 人工验收清单（打开编辑器逐一确认）**
 
 1. 打开 MainMenu：标题"开放世界生存"、按钮中文、设置面板三页签可切换、视频下拉框有选项、音频滑条可拖、键位页有 6 行、改绑遮罩可弹出。
 2. 点"新游戏"→ LoadingScreen 显示进度与中文提示 → 进入 GameWorld，玩家落地无穿地。
@@ -2417,11 +2433,11 @@ Expected: 全部 `OK`。
 7. 敌人会追击攻击玩家，玩家掉血、死亡后 0.5 秒重生（SP0 玩家主动攻击暂不可用，SP3 恢复）。
 8. 控制台零报错（红色错误）。
 
-- [ ] **Step 6: 提交并合并**
+- [ ] **Step 4: 提交并合并（合并 main 属共享分支操作，执行前先向用户确认）**
 
 ```powershell
 git add -A
-git commit -m "sp0: 构建配置与 PC 构建冒烟通过（MainMenu+GameWorld）"
+git commit -m "sp0: PC 构建冒烟通过（MainMenu+GameWorld）"
 git checkout main
 git merge --no-ff feature/sp0-foundation -m "sp0: 工程地基完成（_Game/玩家/主菜单/加载/设置/交互桥接/构建）"
 ```
