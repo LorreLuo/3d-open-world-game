@@ -794,7 +794,7 @@ namespace Game.Editor
 
             var sourceFont = AssetDatabase.LoadAssetAtPath<Font>(fontFile);
             if (sourceFont == null) { throw new System.Exception("无法加载字体源: " + fontFile); }
-            var fontAsset = TMP_FontAsset.CreateFontAsset(sourceFont, 90, 9, GlyphRenderMode.SDFAA, 1024, 1024, AtlasPopulationMode.Dynamic);
+            var fontAsset = TMP_FontAsset.CreateFontAsset(sourceFont, 90, 9, UnityEngine.TextCore.LowLevel.GlyphRenderMode.SDFAA, 1024, 1024, AtlasPopulationMode.Dynamic);
             fontAsset.name = "SimHei SDF";
             AssetDatabase.CreateAsset(fontAsset, FontPath);
             if (fontAsset.atlasTextures != null && fontAsset.atlasTextures.Length > 0 && fontAsset.atlasTextures[0] != null) {
