@@ -769,7 +769,11 @@ namespace Game.Editor
         public static TMP_FontAsset EnsureCjkFont()
         {
             var existing = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(FontPath);
-            if (existing != null) { return existing; }
+            if (existing != null) {
+                // 校验可用性：无字体源则删除重建（修复前生成的废资产会被自动清理）
+                if (existing.sourceFontFile != null) { return existing; }
+                AssetDatabase.DeleteAsset(FontPath);
+            }
             if (!AssetDatabase.IsValidFolder("Assets/_Game/Fonts")) { AssetDatabase.CreateFolder("Assets/_Game", "Fonts"); }
 
             string fontFile = null;
@@ -788,9 +792,15 @@ namespace Game.Editor
                 fontFile = dst;
             }
 
-            var fontAsset = TMP_FontAsset.CreateFontAsset(new Font(fontFile));
+            var sourceFont = AssetDatabase.LoadAssetAtPath<Font>(fontFile);
+            if (sourceFont == null) { throw new System.Exception("无法加载字体源: " + fontFile); }
+            var fontAsset = TMP_FontAsset.CreateFontAsset(sourceFont, 90, 9, GlyphRenderMode.SDFAA, 1024, 1024, AtlasPopulationMode.Dynamic);
             fontAsset.name = "SimHei SDF";
             AssetDatabase.CreateAsset(fontAsset, FontPath);
+            if (fontAsset.atlasTextures != null && fontAsset.atlasTextures.Length > 0 && fontAsset.atlasTextures[0] != null) {
+                fontAsset.atlasTextures[0].name = "SimHei SDF Atlas";
+                AssetDatabase.AddObjectToAsset(fontAsset.atlasTextures[0], fontAsset);
+            }
             var mat = fontAsset.material;
             mat.name = "SimHei SDF Atlas Material";
             AssetDatabase.AddObjectToAsset(mat, fontAsset);
@@ -930,6 +940,11 @@ namespace Game.Editor
 
             var managerGo = new GameObject("InteractablesManager");
             managerGo.transform.SetParent(root.transform, false);
+            var managerRt = managerGo.AddComponent<RectTransform>();
+            managerRt.anchorMin = Vector2.zero;
+            managerRt.anchorMax = Vector2.one;
+            managerRt.offsetMin = Vector2.zero;
+            managerRt.offsetMax = Vector2.zero;
             var mgr = managerGo.AddComponent<InteractablesManager>();
 
             var keyGo = new GameObject("InteractableKey");
