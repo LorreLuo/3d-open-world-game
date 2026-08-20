@@ -34,7 +34,7 @@
 | Spark.ThirdPersonController | `e3e4c9298a186394a962522fd1e1406e` |
 | Spark.Interactables | `87b6ca17a960fac4cab63d31c340cac6` |
 | Opsive.UltimateInventorySystem | `33948188067f67944b82252675cf09c3` |
-| Opsive.Shared.Runtime | `d8e89a79cd8df8848b5d3356783eb74` |
+| Opsive.Shared.Runtime | `d8e89a79cd8df884b8d5b3356783eb74` |
 | Opsive.UltimateInventorySystem.Demo | `096d6c1262816c04ca09d7ae1d201d8a` |
 | Unity.TextMeshPro | `6055be8ebefd69e48b49212b09b47b2f` |
 | Unity.InputSystem | `75469ad4d38634e559750d17036d5f7c` |
@@ -265,7 +265,7 @@ git commit -m "sp0: 添加 Player/MainCamera 标签与 Player 层"
         "GUID:58cafe6aa25e81840a5d0c1c17d73646",
         "GUID:431c47b6ba2fcf24db428079881cdee1",
         "GUID:33948188067f67944b82252675cf09c3",
-        "GUID:d8e89a79cd8df8848b5d3356783eb74",
+        "GUID:d8e89a79cd8df884b8d5b3356783eb74",
         "GUID:096d6c1262816c04ca09d7ae1d201d8a"
     ],
     "includePlatforms": [],
@@ -291,7 +291,7 @@ git commit -m "sp0: 添加 Player/MainCamera 标签与 Player 层"
         "GUID:7b702ed6fdc641b46abf81d48b50e313",
         "GUID:87b6ca17a960fac4cab63d31c340cac6",
         "GUID:33948188067f67944b82252675cf09c3",
-        "GUID:d8e89a79cd8df8848b5d3356783eb74",
+        "GUID:d8e89a79cd8df884b8d5b3356783eb74",
         "GUID:096d6c1262816c04ca09d7ae1d201d8a"
     ],
     "includePlatforms": [],
@@ -325,7 +325,7 @@ git commit -m "sp0: 添加 Player/MainCamera 标签与 Player 层"
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
         "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:33948188067f67944b82252675cf09c3",
-        "GUID:d8e89a79cd8df8848b5d3356783eb74",
+        "GUID:d8e89a79cd8df884b8d5b3356783eb74",
         "GUID:096d6c1262816c04ca09d7ae1d201d8a",
         "GUID:8f88b081f5b9b0f4f9e2c61dcb4b8b04",
         "GUID:0f679c4f1f27b534f83c0a93c2c44a1a"
