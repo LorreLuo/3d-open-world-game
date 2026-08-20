@@ -33,7 +33,7 @@ namespace Game.Editor
             AssetDatabase.CopyAsset(SourceAnimator, TargetAnimator);
             AssetDatabase.ImportAsset(TargetPrefab);
 
-            var controller = AnimatorController.LoadAnimatorControllerAtPath(TargetAnimator);
+            var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(TargetAnimator);
             AddSparkParameters(controller);
 
             // 读取旧 prefab 中待迁移的序列化字段
