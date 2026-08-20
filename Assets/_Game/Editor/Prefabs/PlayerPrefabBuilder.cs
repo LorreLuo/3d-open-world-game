@@ -78,7 +78,8 @@ namespace Game.Editor
             }
             tpcSo.ApplyModifiedPropertiesWithoutUndo();
 
-            var playerInput = root.AddComponent<PlayerInput>();
+            var playerInput = root.GetComponent<PlayerInput>();
+            if (playerInput == null) { playerInput = root.AddComponent<PlayerInput>(); }
             playerInput.actions = AssetDatabase.LoadAssetAtPath<InputActionAsset>(ThirdPersonInput);
             playerInput.defaultActionMap = "Player";
             playerInput.notificationBehavior = PlayerNotifications.SendMessages;
