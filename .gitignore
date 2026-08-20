@@ -109,3 +109,7 @@ Assets/FantasyEnvironments/
 Assets/TerrainSampleAssets/
 
 echo "Packages/cache/" >> .gitignore
+
+.superpowers/
+TestResults/
+Builds/
