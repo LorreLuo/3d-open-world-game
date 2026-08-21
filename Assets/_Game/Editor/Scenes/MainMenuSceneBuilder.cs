@@ -171,6 +171,21 @@ namespace Game.Editor
             gsuSo.FindProperty("hideOnStart").boolValue = true;
             gsuSo.ApplyModifiedPropertiesWithoutUndo();
 
+            // 初始隐藏：hideOnStart 的 ClosePanel 对从未打开的面板不生效（isPanelOpen 为 false 时直接 return），
+            // 因此必须把 CanvasGroup 序列化为 alpha=0 的隐藏态，OpenPanel 时才会置 1。
+            panelCg.alpha = 0f;
+            panelCg.interactable = false;
+            panelCg.blocksRaycasts = false;
+
+            // 关闭按钮
+            var closeBtn = CreateButton(panelGo.transform, "CloseSettingsButton", "关闭", 0f, font);
+            var closeRect = closeBtn.GetComponent<RectTransform>();
+            closeRect.anchorMin = closeRect.anchorMax = new Vector2(1f, 1f);
+            closeRect.pivot = new Vector2(1f, 1f);
+            closeRect.sizeDelta = new Vector2(160, 56);
+            closeRect.anchoredPosition = new Vector2(-40, -40);
+            UnityEventTools.AddPersistentListener(closeBtn.GetComponent<Button>().onClick, gsu.HideSettings);
+
             EditorUtility.SetDirty(panelGo);
         }
 
