@@ -19,5 +19,5 @@ MonoBehaviour:
   icon: {fileID: 0}
   sceneFileName: GameWorld
   defaultSpawnPosition: {x: 0, y: 0, z: 0}
-  defaultSpawnRotation: {x: 0, y: 0, z: 0}
+  defaultSpawnRotation: {x: -0, y: 180, z: 0}
   loadingImages: []
