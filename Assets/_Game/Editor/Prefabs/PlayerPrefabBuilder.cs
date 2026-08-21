@@ -5,8 +5,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Opsive.UltimateInventorySystem.Demo.CharacterControl;
 using Opsive.UltimateInventorySystem.Demo.CharacterControl.Player;
-using Opsive.UltimateInventorySystem.Demo.Damageable;
-using Game.Runtime.Player;
 
 namespace Game.Editor
 {
@@ -22,43 +20,35 @@ namespace Game.Editor
         [MenuItem("Game/Build/Player Prefab")]
         public static void Build()
         {
-            if (!AssetDatabase.IsValidFolder("Assets/_Game/Prefabs/Player")) {
-                DatabaseGenerator_EnsureFolder("Assets/_Game/Prefabs/Player");
-            }
-            if (!AssetDatabase.IsValidFolder("Assets/_Game/Animations/Player")) {
-                DatabaseGenerator_EnsureFolder("Assets/_Game/Animations/Player");
-            }
+            EnsureFolder("Assets/_Game/Prefabs/Player");
+            EnsureFolder("Assets/_Game/Animations/Player");
 
-            AssetDatabase.CopyAsset(SourcePrefab, TargetPrefab);
-            AssetDatabase.CopyAsset(SourceAnimator, TargetAnimator);
+            // 只在首次创建时复制（CopyAsset 会重写 meta GUID，重复复制会破坏引用）
+            if (AssetDatabase.LoadAssetAtPath<GameObject>(TargetPrefab) == null) {
+                AssetDatabase.CopyAsset(SourcePrefab, TargetPrefab);
+            }
+            if (AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(TargetAnimator) == null) {
+                AssetDatabase.CopyAsset(SourceAnimator, TargetAnimator);
+            }
             AssetDatabase.ImportAsset(TargetPrefab);
 
             var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(TargetAnimator);
             AddSparkParameters(controller);
 
-            // 读取旧 prefab 中待迁移的序列化字段
-            var sourceRoot = PrefabUtility.LoadPrefabContents(SourcePrefab);
-            var sourceCharacterSo = new SerializedObject(sourceRoot.GetComponent<PlayerCharacter>());
-            var srcStatsProp = sourceCharacterSo.FindProperty("m_BaseStats");
-            var respawnOnDeath = sourceCharacterSo.FindProperty("m_RespawnOnDeath").boolValue;
-            var itemHotbar = sourceCharacterSo.FindProperty("m_ItemHotbar").objectReferenceValue;
-            var sourceDamageableSo = new SerializedObject(sourceRoot.GetComponent<DemoCharacterDamageable>());
-            var srcFlashProp = sourceDamageableSo.FindProperty("m_Flash");
-            var srcFlashRendererObj = srcFlashProp.FindPropertyRelative("m_Renderer").objectReferenceValue as Renderer;
-            string flashRendererName = srcFlashRendererObj != null ? srcFlashRendererObj.name : null;
-            PrefabUtility.UnloadPrefabContents(sourceRoot);
-
-            // 编辑新 prefab
+            // 编辑目标 prefab：保留 demo 的 Character/PlayerCharacter/DemoCharacterDamageable，
+            // 只关闭 demo 自身移动（Spark 控制器接管），再叠加 Spark 组件栈。
             var root = PrefabUtility.LoadPrefabContents(TargetPrefab);
             root.tag = "Player";
 
-            foreach (var comp in new List<Component> {
-                root.GetComponent<PlayerCharacter>(),
-                root.GetComponent<DemoCharacterDamageable>(),
-                root.GetComponent<CharacterCamera>(),
-            }) {
-                if (comp != null) { Object.DestroyImmediate(comp); }
+            var playerCharacter = root.GetComponent<PlayerCharacter>();
+            if (playerCharacter != null) {
+                var pcSo = new SerializedObject(playerCharacter);
+                pcSo.FindProperty("m_EnableMovement").boolValue = false;
+                pcSo.ApplyModifiedPropertiesWithoutUndo();
             }
+
+            var characterCamera = root.GetComponent<CharacterCamera>();
+            if (characterCamera != null) { Object.DestroyImmediate(characterCamera); }
 
             var animator = root.GetComponent<Animator>();
             animator.runtimeAnimatorController = controller;
@@ -98,28 +88,6 @@ namespace Game.Editor
             tpcSo.FindProperty("cameraFollowTarget").objectReferenceValue = followTargetGo;
             tpcSo.ApplyModifiedPropertiesWithoutUndo();
 
-            var gpc = root.AddComponent<GamePlayerCharacter>();
-            var gpcSo = new SerializedObject(gpc);
-            CopySerializedValue(srcStatsProp, gpcSo.FindProperty("m_BaseStats"));
-            gpcSo.FindProperty("m_RespawnOnDeath").boolValue = respawnOnDeath;
-            gpcSo.FindProperty("m_ItemHotbar").objectReferenceValue = itemHotbar;
-            gpcSo.ApplyModifiedPropertiesWithoutUndo();
-
-            var gpd = root.AddComponent<GamePlayerDamageable>();
-            var gpdSo = new SerializedObject(gpd);
-            gpdSo.FindProperty("m_Character").objectReferenceValue = gpc;
-            CopySerializedValue(srcFlashProp, gpdSo.FindProperty("m_Flash"));
-            if (!string.IsNullOrEmpty(flashRendererName)) {
-                var renderers = root.GetComponentsInChildren<Renderer>(true);
-                Renderer match = null;
-                for (int k = 0; k < renderers.Length; k++) {
-                    if (renderers[k].name == flashRendererName) { match = renderers[k]; break; }
-                }
-                var dstFlashRenderer = gpdSo.FindProperty("m_Flash").FindPropertyRelative("m_Renderer");
-                if (dstFlashRenderer != null && match != null) { dstFlashRenderer.objectReferenceValue = match; }
-            }
-            gpdSo.ApplyModifiedPropertiesWithoutUndo();
-
             PrefabUtility.SaveAsPrefabAsset(root, TargetPrefab);
             PrefabUtility.UnloadPrefabContents(root);
 
@@ -154,43 +122,12 @@ namespace Game.Editor
             foreach (var t in triggers) { Add(t, AnimatorControllerParameterType.Trigger); }
         }
 
-        /// <summary>
-        /// 把普通 [Serializable] 类字段的序列化值递归复制（objectReferenceValue 对非 Object 无效）。
-        /// </summary>
-        static void CopySerializedValue(SerializedProperty src, SerializedProperty dst)
-        {
-            if (src == null || dst == null) { return; }
-            switch (dst.propertyType) {
-                case SerializedPropertyType.Generic:
-                    var end = src.GetEndProperty();
-                    var it = src.Copy();
-                    if (it.Next(true)) {
-                        do {
-                            if (SerializedProperty.EqualContents(it, end)) { break; }
-                            var relPath = it.propertyPath.Substring(src.propertyPath.Length + 1);
-                            var rel = dst.FindPropertyRelative(relPath);
-                            if (rel != null) { CopySerializedValue(it, rel); }
-                        } while (it.Next(false));
-                    }
-                    break;
-                case SerializedPropertyType.ObjectReference: dst.objectReferenceValue = src.objectReferenceValue; break;
-                case SerializedPropertyType.Integer: dst.intValue = src.intValue; break;
-                case SerializedPropertyType.Float: dst.floatValue = src.floatValue; break;
-                case SerializedPropertyType.Boolean: dst.boolValue = src.boolValue; break;
-                case SerializedPropertyType.String: dst.stringValue = src.stringValue; break;
-                case SerializedPropertyType.Color: dst.colorValue = src.colorValue; break;
-                case SerializedPropertyType.Vector2: dst.vector2Value = src.vector2Value; break;
-                case SerializedPropertyType.Vector3: dst.vector3Value = src.vector3Value; break;
-                case SerializedPropertyType.Enum: dst.enumValueIndex = src.enumValueIndex; break;
-            }
-        }
-
-        static void DatabaseGenerator_EnsureFolder(string path)
+        static void EnsureFolder(string path)
         {
             if (AssetDatabase.IsValidFolder(path)) { return; }
             var parent = System.IO.Path.GetDirectoryName(path).Replace('\\', '/');
             var leaf = System.IO.Path.GetFileName(path);
-            if (!AssetDatabase.IsValidFolder(parent)) { DatabaseGenerator_EnsureFolder(parent); }
+            if (!AssetDatabase.IsValidFolder(parent)) { EnsureFolder(parent); }
             AssetDatabase.CreateFolder(parent, leaf);
         }
     }

@@ -15,6 +15,17 @@ namespace Game.Editor
             Debug.Log("COMPILE_CHECK_DONE");
         }
 
+        [MenuItem("Game/Verify/Configure Build Settings")]
+        public static void ConfigureBuildSettings()
+        {
+            EditorBuildSettings.scenes = new[]
+            {
+                new EditorBuildSettingsScene("Assets/_Game/Scenes/MainMenu.unity", true),
+                new EditorBuildSettingsScene("Assets/_Game/Scenes/GameWorld.unity", true),
+            };
+            Debug.Log("BUILD_SETTINGS_DONE");
+        }
+
         [MenuItem("Game/Verify/Build Windows Player")]
         public static void BuildWindows()
         {
