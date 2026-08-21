@@ -1,4 +1,4 @@
-# SP0 工程地基 Implementation Plan
+﻿# SP0 工程地基 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -34,7 +34,7 @@
 | Spark.ThirdPersonController | `e3e4c9298a186394a962522fd1e1406e` |
 | Spark.Interactables | `87b6ca17a960fac4cab63d31c340cac6` |
 | Opsive.UltimateInventorySystem | `33948188067f67944b82252675cf09c3` |
-| Opsive.Shared.Runtime | `d8e89a79cd8df8848b5d3356783eb74` |
+| Opsive.Shared.Runtime | `d8e89a79cd8df884b8d5b3356783eb74` |
 | Opsive.UltimateInventorySystem.Demo | `096d6c1262816c04ca09d7ae1d201d8a` |
 | Unity.TextMeshPro | `6055be8ebefd69e48b49212b09b47b2f` |
 | Unity.InputSystem | `75469ad4d38634e559750d17036d5f7c` |
@@ -265,7 +265,7 @@ git commit -m "sp0: 添加 Player/MainCamera 标签与 Player 层"
         "GUID:58cafe6aa25e81840a5d0c1c17d73646",
         "GUID:431c47b6ba2fcf24db428079881cdee1",
         "GUID:33948188067f67944b82252675cf09c3",
-        "GUID:d8e89a79cd8df8848b5d3356783eb74",
+        "GUID:d8e89a79cd8df884b8d5b3356783eb74",
         "GUID:096d6c1262816c04ca09d7ae1d201d8a"
     ],
     "includePlatforms": [],
@@ -291,7 +291,7 @@ git commit -m "sp0: 添加 Player/MainCamera 标签与 Player 层"
         "GUID:7b702ed6fdc641b46abf81d48b50e313",
         "GUID:87b6ca17a960fac4cab63d31c340cac6",
         "GUID:33948188067f67944b82252675cf09c3",
-        "GUID:d8e89a79cd8df8848b5d3356783eb74",
+        "GUID:d8e89a79cd8df884b8d5b3356783eb74",
         "GUID:096d6c1262816c04ca09d7ae1d201d8a"
     ],
     "includePlatforms": [],
@@ -325,7 +325,7 @@ git commit -m "sp0: 添加 Player/MainCamera 标签与 Player 层"
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
         "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:33948188067f67944b82252675cf09c3",
-        "GUID:d8e89a79cd8df8848b5d3356783eb74",
+        "GUID:d8e89a79cd8df884b8d5b3356783eb74",
         "GUID:096d6c1262816c04ca09d7ae1d201d8a",
         "GUID:8f88b081f5b9b0f4f9e2c61dcb4b8b04",
         "GUID:0f679c4f1f27b534f83c0a93c2c44a1a"
@@ -769,7 +769,11 @@ namespace Game.Editor
         public static TMP_FontAsset EnsureCjkFont()
         {
             var existing = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(FontPath);
-            if (existing != null) { return existing; }
+            if (existing != null) {
+                // 校验可用性：无字体源则删除重建（修复前生成的废资产会被自动清理）
+                if (existing.sourceFontFile != null) { return existing; }
+                AssetDatabase.DeleteAsset(FontPath);
+            }
             if (!AssetDatabase.IsValidFolder("Assets/_Game/Fonts")) { AssetDatabase.CreateFolder("Assets/_Game", "Fonts"); }
 
             string fontFile = null;
@@ -788,9 +792,15 @@ namespace Game.Editor
                 fontFile = dst;
             }
 
-            var fontAsset = TMP_FontAsset.CreateFontAsset(new Font(fontFile));
+            var sourceFont = AssetDatabase.LoadAssetAtPath<Font>(fontFile);
+            if (sourceFont == null) { throw new System.Exception("无法加载字体源: " + fontFile); }
+            var fontAsset = TMP_FontAsset.CreateFontAsset(sourceFont, 90, 9, UnityEngine.TextCore.LowLevel.GlyphRenderMode.SDFAA, 1024, 1024, AtlasPopulationMode.Dynamic);
             fontAsset.name = "SimHei SDF";
             AssetDatabase.CreateAsset(fontAsset, FontPath);
+            if (fontAsset.atlasTextures != null && fontAsset.atlasTextures.Length > 0 && fontAsset.atlasTextures[0] != null) {
+                fontAsset.atlasTextures[0].name = "SimHei SDF Atlas";
+                AssetDatabase.AddObjectToAsset(fontAsset.atlasTextures[0], fontAsset);
+            }
             var mat = fontAsset.material;
             mat.name = "SimHei SDF Atlas Material";
             AssetDatabase.AddObjectToAsset(mat, fontAsset);
@@ -930,6 +940,11 @@ namespace Game.Editor
 
             var managerGo = new GameObject("InteractablesManager");
             managerGo.transform.SetParent(root.transform, false);
+            var managerRt = managerGo.AddComponent<RectTransform>();
+            managerRt.anchorMin = Vector2.zero;
+            managerRt.anchorMax = Vector2.one;
+            managerRt.offsetMin = Vector2.zero;
+            managerRt.offsetMax = Vector2.zero;
             var mgr = managerGo.AddComponent<InteractablesManager>();
 
             var keyGo = new GameObject("InteractableKey");
@@ -1113,17 +1128,19 @@ namespace Game.Editor
             AssetDatabase.CopyAsset(SourceAnimator, TargetAnimator);
             AssetDatabase.ImportAsset(TargetPrefab);
 
-            var controller = AnimatorController.LoadAnimatorControllerAtPath(TargetAnimator);
+            var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(TargetAnimator);
             AddSparkParameters(controller);
 
             // 读取旧 prefab 中待迁移的序列化字段
             var sourceRoot = PrefabUtility.LoadPrefabContents(SourcePrefab);
             var sourceCharacterSo = new SerializedObject(sourceRoot.GetComponent<PlayerCharacter>());
-            var baseStats = sourceCharacterSo.FindProperty("m_BaseStats").objectReferenceValue;
+            var srcStatsProp = sourceCharacterSo.FindProperty("m_BaseStats");
             var respawnOnDeath = sourceCharacterSo.FindProperty("m_RespawnOnDeath").boolValue;
             var itemHotbar = sourceCharacterSo.FindProperty("m_ItemHotbar").objectReferenceValue;
             var sourceDamageableSo = new SerializedObject(sourceRoot.GetComponent<DemoCharacterDamageable>());
-            var flash = sourceDamageableSo.FindProperty("m_Flash").objectReferenceValue;
+            var srcFlashProp = sourceDamageableSo.FindProperty("m_Flash");
+            var srcFlashRendererObj = srcFlashProp.FindPropertyRelative("m_Renderer").objectReferenceValue as Renderer;
+            string flashRendererName = srcFlashRendererObj != null ? srcFlashRendererObj.name : null;
             PrefabUtility.UnloadPrefabContents(sourceRoot);
 
             // 编辑新 prefab
@@ -1158,7 +1175,8 @@ namespace Game.Editor
             }
             tpcSo.ApplyModifiedPropertiesWithoutUndo();
 
-            var playerInput = root.AddComponent<PlayerInput>();
+            var playerInput = root.GetComponent<PlayerInput>();
+            if (playerInput == null) { playerInput = root.AddComponent<PlayerInput>(); }
             playerInput.actions = AssetDatabase.LoadAssetAtPath<InputActionAsset>(ThirdPersonInput);
             playerInput.defaultActionMap = "Player";
             playerInput.notificationBehavior = PlayerNotifications.SendMessages;
@@ -1177,7 +1195,7 @@ namespace Game.Editor
 
             var gpc = root.AddComponent<GamePlayerCharacter>();
             var gpcSo = new SerializedObject(gpc);
-            gpcSo.FindProperty("m_BaseStats").objectReferenceValue = baseStats;
+            CopySerializedValue(srcStatsProp, gpcSo.FindProperty("m_BaseStats"));
             gpcSo.FindProperty("m_RespawnOnDeath").boolValue = respawnOnDeath;
             gpcSo.FindProperty("m_ItemHotbar").objectReferenceValue = itemHotbar;
             gpcSo.ApplyModifiedPropertiesWithoutUndo();
@@ -1185,7 +1203,16 @@ namespace Game.Editor
             var gpd = root.AddComponent<GamePlayerDamageable>();
             var gpdSo = new SerializedObject(gpd);
             gpdSo.FindProperty("m_Character").objectReferenceValue = gpc;
-            gpdSo.FindProperty("m_Flash").objectReferenceValue = flash;
+            CopySerializedValue(srcFlashProp, gpdSo.FindProperty("m_Flash"));
+            if (!string.IsNullOrEmpty(flashRendererName)) {
+                var renderers = root.GetComponentsInChildren<Renderer>(true);
+                Renderer match = null;
+                for (int k = 0; k < renderers.Length; k++) {
+                    if (renderers[k].name == flashRendererName) { match = renderers[k]; break; }
+                }
+                var dstFlashRenderer = gpdSo.FindProperty("m_Flash").FindPropertyRelative("m_Renderer");
+                if (dstFlashRenderer != null && match != null) { dstFlashRenderer.objectReferenceValue = match; }
+            }
             gpdSo.ApplyModifiedPropertiesWithoutUndo();
 
             PrefabUtility.SaveAsPrefabAsset(root, TargetPrefab);
@@ -1220,6 +1247,37 @@ namespace Game.Editor
                 "Roll Right", "Roll Backward Left", "Roll Backward Right", "Roll Backward"
             };
             foreach (var t in triggers) { Add(t, AnimatorControllerParameterType.Trigger); }
+        }
+
+        /// <summary>
+        /// 把普通 [Serializable] 类字段的序列化值递归复制（objectReferenceValue 对非 Object 无效）。
+        /// </summary>
+        static void CopySerializedValue(SerializedProperty src, SerializedProperty dst)
+        {
+            if (src == null || dst == null) { return; }
+            switch (dst.propertyType) {
+                case SerializedPropertyType.Generic:
+                    var end = src.GetEndProperty();
+                    var it = src.Copy();
+                    if (it.Next(true)) {
+                        do {
+                            if (SerializedProperty.EqualContents(it, end)) { break; }
+                            var relPath = it.propertyPath.Substring(src.propertyPath.Length + 1);
+                            var rel = dst.FindPropertyRelative(relPath);
+                            if (rel != null) { CopySerializedValue(it, rel); }
+                        } while (it.Next(false));
+                    }
+                    break;
+                case SerializedPropertyType.ObjectReference: dst.objectReferenceValue = src.objectReferenceValue; break;
+                case SerializedPropertyType.Integer: dst.intValue = src.intValue; break;
+                case SerializedPropertyType.Float: dst.floatValue = src.floatValue; break;
+                case SerializedPropertyType.Boolean: dst.boolValue = src.boolValue; break;
+                case SerializedPropertyType.String: dst.stringValue = src.stringValue; break;
+                case SerializedPropertyType.Color: dst.colorValue = src.colorValue; break;
+                case SerializedPropertyType.Vector2: dst.vector2Value = src.vector2Value; break;
+                case SerializedPropertyType.Vector3: dst.vector3Value = src.vector3Value; break;
+                case SerializedPropertyType.Enum: dst.enumValueIndex = src.enumValueIndex; break;
+            }
         }
 
         static void DatabaseGenerator_EnsureFolder(string path)
@@ -2451,3 +2509,7 @@ git merge --no-ff feature/sp0-foundation -m "sp0: 工程地基完成（_Game/玩
 - [ ] PlayMode 测试 4 例全绿；Compile/Build 均通过
 - [ ] 全部代码命名空间化；桥接边界（Game.Bridge）清晰；Spark/UIS/Samples 源码零修改
 - [ ] `main` 分支历史清晰（12 个 `sp0:` 提交）
+
+
+
+
