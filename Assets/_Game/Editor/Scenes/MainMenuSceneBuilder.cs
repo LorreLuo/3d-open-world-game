@@ -129,7 +129,8 @@ namespace Game.Editor
             settingsRoot.AddComponent<GameSettingsManager>();
 
             var panelGo = new GameObject("GameSettingsPanel");
-            panelGo.transform.SetParent(settingsRoot.transform, false);
+            // 直接挂到 Canvas 下，保证全屏 RectTransform 锚定生效（settingsRoot 是普通 Transform，会破坏子级 RectTransform 布局）
+            panelGo.transform.SetParent(canvasTransform, false);
             var panelRect = panelGo.AddComponent<RectTransform>();
             panelRect.anchorMin = Vector2.zero;
             panelRect.anchorMax = Vector2.one;
