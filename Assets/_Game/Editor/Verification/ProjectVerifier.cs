@@ -21,6 +21,7 @@ namespace Game.Editor
             EditorBuildSettings.scenes = new[]
             {
                 new EditorBuildSettingsScene("Assets/_Game/Scenes/MainMenu.unity", true),
+                new EditorBuildSettingsScene("Assets/_Game/Scenes/CharacterCreation.unity", true),
                 new EditorBuildSettingsScene("Assets/_Game/Scenes/GameWorld.unity", true),
             };
             Debug.Log("BUILD_SETTINGS_DONE");

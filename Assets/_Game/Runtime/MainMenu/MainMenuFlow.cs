@@ -4,12 +4,12 @@ using UnityEngine.UI;
 namespace Game.Runtime.MainMenu
 {
     /// <summary>
-    /// 主菜单流程控制。新游戏经 Spark 场景加载器进入游戏世界；继续游戏在 SP2 接入。
+    /// 主菜单流程控制。新游戏先进入角色创建场景；继续游戏在 SP2 接入。
     /// </summary>
     public class MainMenuFlow : MonoBehaviour
     {
-        [Tooltip("游戏世界场景条目。")]
-        [SerializeField] protected SceneEntry m_GameWorldSceneEntry;
+        [Tooltip("角色创建场景条目（新游戏先进入创建）。")]
+        [SerializeField] protected SceneEntry m_CharacterCreationSceneEntry;
         [Tooltip("继续游戏按钮（SP2 前禁用）。")]
         [SerializeField] protected Button m_ContinueButton;
 
@@ -20,7 +20,7 @@ namespace Game.Runtime.MainMenu
 
         public void OnNewGame()
         {
-            SceneLoader.LoadScene(m_GameWorldSceneEntry);
+            SceneLoader.LoadScene(m_CharacterCreationSceneEntry);
         }
 
         public void OnContinue()

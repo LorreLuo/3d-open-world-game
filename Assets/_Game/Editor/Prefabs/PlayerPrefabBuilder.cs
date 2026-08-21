@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Opsive.UltimateInventorySystem.Demo.CharacterControl;
 using Opsive.UltimateInventorySystem.Demo.CharacterControl.Player;
+using Game.Runtime.Character;
 
 namespace Game.Editor
 {
@@ -87,6 +88,9 @@ namespace Game.Editor
             followTargetGo.transform.localPosition = new Vector3(0, 1.5f, 0);
             tpcSo.FindProperty("cameraFollowTarget").objectReferenceValue = followTargetGo;
             tpcSo.ApplyModifiedPropertiesWithoutUndo();
+
+            // 外观应用器：出生时读取角色创建数据（换色/换装）
+            root.AddComponent<PlayerCustomizationApplier>();
 
             PrefabUtility.SaveAsPrefabAsset(root, TargetPrefab);
             PrefabUtility.UnloadPrefabContents(root);

@@ -48,6 +48,7 @@ namespace Game.Editor
             }
 
             CreateSceneEntry("MainMenu", "MainMenu", "主菜单");
+            CreateSceneEntry("CharacterCreation", "CharacterCreation", "角色创建");
             CreateSceneEntry("GameWorld", "GameWorld", "游戏世界");
 
             var categoryPath = $"{SettingsPath}/GeneralKeybindCategory.asset";

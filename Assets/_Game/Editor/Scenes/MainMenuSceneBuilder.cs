@@ -14,7 +14,7 @@ namespace Game.Editor
     {
         const string ScenePath = "Assets/_Game/Scenes/MainMenu.unity";
         const string LoadingScreenPrefab = "Assets/_Game/Prefabs/UI/LoadingScreen.prefab";
-        const string GameWorldEntry = "Assets/_Game/Data/Resources/Database/Scenes/GameWorld.asset";
+        const string CharacterCreationEntry = "Assets/_Game/Data/Resources/Database/Scenes/CharacterCreation.asset";
         const string KeybindRowPrefab = "Assets/Blink/Spark/Core/Plugins/GameSettings/Runtime/UI Prefabs/KeybindRow.prefab";
         const string KeybindCategoryTitlePrefab = "Assets/Blink/Spark/Core/Plugins/GameSettings/Runtime/UI Prefabs/KeybindCategoryTitle.prefab";
 
@@ -81,8 +81,8 @@ namespace Game.Editor
             var flowGo = new GameObject("MainMenuFlow");
             var flow = flowGo.AddComponent<MainMenuFlow>();
             var flowSo = new SerializedObject(flow);
-            flowSo.FindProperty("m_GameWorldSceneEntry").objectReferenceValue =
-                AssetDatabase.LoadAssetAtPath<SceneEntry>(GameWorldEntry);
+            flowSo.FindProperty("m_CharacterCreationSceneEntry").objectReferenceValue =
+                AssetDatabase.LoadAssetAtPath<SceneEntry>(CharacterCreationEntry);
             flowSo.FindProperty("m_ContinueButton").objectReferenceValue = continueBtn.GetComponent<Button>();
             flowSo.ApplyModifiedPropertiesWithoutUndo();
 
