@@ -102,6 +102,12 @@ namespace Game.Runtime.Character
 
         public virtual void OnConfirm()
         {
+            WriteSaveData();
+            LoadGameWorld();
+        }
+
+        public virtual void WriteSaveData()
+        {
             var save = Spark.GetPlugin<ISaveDataPlugin>();
             if (save != null) {
                 save.SetSaveData(new GameCharacterSaveData {
@@ -111,6 +117,10 @@ namespace Game.Runtime.Character
                     outfitId = m_CurrentOutfitId,
                 });
             }
+        }
+
+        public virtual void LoadGameWorld()
+        {
             if (m_GameWorldSceneEntry != null) { SceneLoader.LoadScene(m_GameWorldSceneEntry); }
         }
 
