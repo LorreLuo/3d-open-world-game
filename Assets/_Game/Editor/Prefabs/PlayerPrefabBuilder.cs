@@ -44,6 +44,7 @@ namespace Game.Editor
             var itemHotbar = sourceCharacterSo.FindProperty("m_ItemHotbar").objectReferenceValue;
             var sourceDamageableSo = new SerializedObject(sourceRoot.GetComponent<DemoCharacterDamageable>());
             var srcFlashProp = sourceDamageableSo.FindProperty("m_Flash");
+            var srcFlashRenderer = srcFlashProp.FindPropertyRelative("m_Renderer").objectReferenceValue;
             PrefabUtility.UnloadPrefabContents(sourceRoot);
 
             // 编辑新 prefab
@@ -107,6 +108,10 @@ namespace Game.Editor
             var gpdSo = new SerializedObject(gpd);
             gpdSo.FindProperty("m_Character").objectReferenceValue = gpc;
             CopySerializedValue(srcFlashProp, gpdSo.FindProperty("m_Flash"));
+            if (srcFlashRenderer != null) {
+                var dstFlashRenderer = gpdSo.FindProperty("m_Flash").FindPropertyRelative("m_Renderer");
+                if (dstFlashRenderer != null) { dstFlashRenderer.objectReferenceValue = srcFlashRenderer; }
+            }
             gpdSo.ApplyModifiedPropertiesWithoutUndo();
 
             PrefabUtility.SaveAsPrefabAsset(root, TargetPrefab);
