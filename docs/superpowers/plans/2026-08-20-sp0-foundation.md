@@ -1139,7 +1139,8 @@ namespace Game.Editor
             var itemHotbar = sourceCharacterSo.FindProperty("m_ItemHotbar").objectReferenceValue;
             var sourceDamageableSo = new SerializedObject(sourceRoot.GetComponent<DemoCharacterDamageable>());
             var srcFlashProp = sourceDamageableSo.FindProperty("m_Flash");
-            var srcFlashRenderer = srcFlashProp.FindPropertyRelative("m_Renderer").objectReferenceValue;
+            var srcFlashRendererObj = srcFlashProp.FindPropertyRelative("m_Renderer").objectReferenceValue as Renderer;
+            string flashRendererName = srcFlashRendererObj != null ? srcFlashRendererObj.name : null;
             PrefabUtility.UnloadPrefabContents(sourceRoot);
 
             // 编辑新 prefab
@@ -1203,9 +1204,14 @@ namespace Game.Editor
             var gpdSo = new SerializedObject(gpd);
             gpdSo.FindProperty("m_Character").objectReferenceValue = gpc;
             CopySerializedValue(srcFlashProp, gpdSo.FindProperty("m_Flash"));
-            if (srcFlashRenderer != null) {
+            if (!string.IsNullOrEmpty(flashRendererName)) {
+                var renderers = root.GetComponentsInChildren<Renderer>(true);
+                Renderer match = null;
+                for (int k = 0; k < renderers.Length; k++) {
+                    if (renderers[k].name == flashRendererName) { match = renderers[k]; break; }
+                }
                 var dstFlashRenderer = gpdSo.FindProperty("m_Flash").FindPropertyRelative("m_Renderer");
-                if (dstFlashRenderer != null) { dstFlashRenderer.objectReferenceValue = srcFlashRenderer; }
+                if (dstFlashRenderer != null && match != null) { dstFlashRenderer.objectReferenceValue = match; }
             }
             gpdSo.ApplyModifiedPropertiesWithoutUndo();
 
@@ -2503,6 +2509,7 @@ git merge --no-ff feature/sp0-foundation -m "sp0: 工程地基完成（_Game/玩
 - [ ] PlayMode 测试 4 例全绿；Compile/Build 均通过
 - [ ] 全部代码命名空间化；桥接边界（Game.Bridge）清晰；Spark/UIS/Samples 源码零修改
 - [ ] `main` 分支历史清晰（12 个 `sp0:` 提交）
+
 
 
 
