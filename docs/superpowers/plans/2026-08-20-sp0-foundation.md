@@ -1,4 +1,4 @@
-﻿# SP0 工程地基 Implementation Plan
+# SP0 工程地基 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -1134,11 +1134,11 @@ namespace Game.Editor
             // 读取旧 prefab 中待迁移的序列化字段
             var sourceRoot = PrefabUtility.LoadPrefabContents(SourcePrefab);
             var sourceCharacterSo = new SerializedObject(sourceRoot.GetComponent<PlayerCharacter>());
-            var baseStats = sourceCharacterSo.FindProperty("m_BaseStats").objectReferenceValue;
+            var srcStatsProp = sourceCharacterSo.FindProperty("m_BaseStats");
             var respawnOnDeath = sourceCharacterSo.FindProperty("m_RespawnOnDeath").boolValue;
             var itemHotbar = sourceCharacterSo.FindProperty("m_ItemHotbar").objectReferenceValue;
             var sourceDamageableSo = new SerializedObject(sourceRoot.GetComponent<DemoCharacterDamageable>());
-            var flash = sourceDamageableSo.FindProperty("m_Flash").objectReferenceValue;
+            var srcFlashProp = sourceDamageableSo.FindProperty("m_Flash");
             PrefabUtility.UnloadPrefabContents(sourceRoot);
 
             // 编辑新 prefab
@@ -1193,7 +1193,7 @@ namespace Game.Editor
 
             var gpc = root.AddComponent<GamePlayerCharacter>();
             var gpcSo = new SerializedObject(gpc);
-            gpcSo.FindProperty("m_BaseStats").objectReferenceValue = baseStats;
+            CopySerializedValue(srcStatsProp, gpcSo.FindProperty("m_BaseStats"));
             gpcSo.FindProperty("m_RespawnOnDeath").boolValue = respawnOnDeath;
             gpcSo.FindProperty("m_ItemHotbar").objectReferenceValue = itemHotbar;
             gpcSo.ApplyModifiedPropertiesWithoutUndo();
@@ -1201,7 +1201,7 @@ namespace Game.Editor
             var gpd = root.AddComponent<GamePlayerDamageable>();
             var gpdSo = new SerializedObject(gpd);
             gpdSo.FindProperty("m_Character").objectReferenceValue = gpc;
-            gpdSo.FindProperty("m_Flash").objectReferenceValue = flash;
+            CopySerializedValue(srcFlashProp, gpdSo.FindProperty("m_Flash"));
             gpdSo.ApplyModifiedPropertiesWithoutUndo();
 
             PrefabUtility.SaveAsPrefabAsset(root, TargetPrefab);
@@ -1236,6 +1236,37 @@ namespace Game.Editor
                 "Roll Right", "Roll Backward Left", "Roll Backward Right", "Roll Backward"
             };
             foreach (var t in triggers) { Add(t, AnimatorControllerParameterType.Trigger); }
+        }
+
+        /// <summary>
+        /// 把普通 [Serializable] 类字段的序列化值递归复制（objectReferenceValue 对非 Object 无效）。
+        /// </summary>
+        static void CopySerializedValue(SerializedProperty src, SerializedProperty dst)
+        {
+            if (src == null || dst == null) { return; }
+            switch (dst.propertyType) {
+                case SerializedPropertyType.Generic:
+                    var end = src.GetEndProperty();
+                    var it = src.Copy();
+                    if (it.Next(true)) {
+                        do {
+                            if (SerializedProperty.EqualContents(it, end)) { break; }
+                            var relPath = it.propertyPath.Substring(src.propertyPath.Length + 1);
+                            var rel = dst.FindPropertyRelative(relPath);
+                            if (rel != null) { CopySerializedValue(it, rel); }
+                        } while (it.Next(false));
+                    }
+                    break;
+                case SerializedPropertyType.ObjectReference: dst.objectReferenceValue = src.objectReferenceValue; break;
+                case SerializedPropertyType.Integer: dst.intValue = src.intValue; break;
+                case SerializedPropertyType.Float: dst.floatValue = src.floatValue; break;
+                case SerializedPropertyType.Boolean: dst.boolValue = src.boolValue; break;
+                case SerializedPropertyType.String: dst.stringValue = src.stringValue; break;
+                case SerializedPropertyType.Color: dst.colorValue = src.colorValue; break;
+                case SerializedPropertyType.Vector2: dst.vector2Value = src.vector2Value; break;
+                case SerializedPropertyType.Vector3: dst.vector3Value = src.vector3Value; break;
+                case SerializedPropertyType.Enum: dst.enumValueIndex = src.enumValueIndex; break;
+            }
         }
 
         static void DatabaseGenerator_EnsureFolder(string path)
