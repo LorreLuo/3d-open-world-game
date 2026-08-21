@@ -95,6 +95,33 @@ namespace Game.Tests
             Assert.AreEqual("Knight", data.outfitId, "护甲未写入存档。");
         }
 
+        [UnityTest]
+        public IEnumerator Player_Applies_Customization_On_Spawn()
+        {
+            LogAssert.ignoreFailingMessages = true;
+
+            // 模拟创建场景确认：写入自定义数据
+            var save = Spark.GetPlugin<ISaveDataPlugin>();
+            save.SetSaveData(new GameCharacterSaveData {
+                hairColor = CharacterCreationFlow.HairPresets[2],
+                shirtColor = CharacterCreationFlow.ShirtPresets[3],
+                bootsColor = CharacterCreationFlow.BootsPresets[0],
+                outfitId = "Leather",
+            });
+
+            SceneManager.LoadScene("GameWorld");
+            yield return null;
+            yield return null;
+
+            var player = SparkEntityRegistry.GetPlayerEntity();
+            Assert.IsNotNull(player, "找不到玩家实体。");
+            var hair = FindRenderer(player.transform, "Hair");
+            Assert.IsNotNull(hair, "玩家缺 Hair 渲染器。");
+            Assert.AreEqual(CharacterCreationFlow.HairPresets[2], hair.material.color, "玩家发色未应用自定义。");
+            var stitched = player.transform.Find("LeatherArmor(Clone)");
+            Assert.IsNotNull(stitched, "玩家护甲未缝合。");
+        }
+
         static SkinnedMeshRenderer FindRenderer(Transform root, string name)
         {
             var renderers = root.GetComponentsInChildren<SkinnedMeshRenderer>(true);
