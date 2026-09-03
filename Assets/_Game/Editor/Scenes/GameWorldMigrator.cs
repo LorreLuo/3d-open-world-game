@@ -8,6 +8,7 @@ using Opsive.UltimateInventorySystem.UI.Menus;
 using Opsive.UltimateInventorySystem.UI.Menus.Chest;
 using Opsive.UltimateInventorySystem.UI.Panels;
 using Game.Bridge;
+using Game.Runtime;
 using Object = UnityEngine.Object;
 
 namespace Game.Editor
@@ -88,24 +89,20 @@ namespace Game.Editor
         }
 
         /// <summary>
-        /// 关闭 Demo 欢迎面板的自动打开：它是菜单面板，自动打开会把 timeScale 置 0，导致进入游戏世界后人物无法移动。
+        /// 给 GameWorld 场景添加运行时引导组件：恢复 timeScale 并关闭 Demo 欢迎面板（它自动打开会把时间暂停导致无法移动）。
         /// </summary>
-        [MenuItem("Game/Build/Disable Welcome Panel Auto-Open")]
-        public static void DisableWelcomePanelAutoOpen()
+        [MenuItem("Game/Build/Add GameWorld Bootstrap")]
+        public static void AddGameWorldBootstrap()
         {
             var scene = EditorSceneManager.OpenScene(TargetScene, OpenSceneMode.Single);
-            var welcomePanel = GameObject.Find("Welcome Panel");
-            if (welcomePanel != null) {
-                var displayPanel = welcomePanel.GetComponent<DisplayPanel>();
-                if (displayPanel != null) {
-                    var so = new SerializedObject(displayPanel);
-                    so.FindProperty("m_OpenOnStart").boolValue = false;
-                    so.ApplyModifiedPropertiesWithoutUndo();
-                    EditorSceneManager.MarkSceneDirty(scene);
-                }
+            var existing = Object.FindObjectsByType<GameWorldBootstrap>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            if (existing.Length == 0) {
+                var go = new GameObject("GameWorldBootstrap");
+                go.AddComponent<GameWorldBootstrap>();
+                EditorSceneManager.MarkSceneDirty(scene);
             }
             EditorSceneManager.SaveScene(scene);
-            Debug.Log("WELCOME_PANEL_AUTO_OPEN_DISABLED");
+            Debug.Log("GAMEWORLD_BOOTSTRAP_ADDED");
         }
 
         static void RewireInventoryMenu<T>(string displayName) where T : InventoryPanelOpener
