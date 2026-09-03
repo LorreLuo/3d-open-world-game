@@ -87,6 +87,27 @@ namespace Game.Editor
             Debug.Log("GAMEWORLD_MIGRATE_DONE");
         }
 
+        /// <summary>
+        /// 关闭 Demo 欢迎面板的自动打开：它是菜单面板，自动打开会把 timeScale 置 0，导致进入游戏世界后人物无法移动。
+        /// </summary>
+        [MenuItem("Game/Build/Disable Welcome Panel Auto-Open")]
+        public static void DisableWelcomePanelAutoOpen()
+        {
+            var scene = EditorSceneManager.OpenScene(TargetScene, OpenSceneMode.Single);
+            var welcomePanel = GameObject.Find("Welcome Panel");
+            if (welcomePanel != null) {
+                var displayPanel = welcomePanel.GetComponent<DisplayPanel>();
+                if (displayPanel != null) {
+                    var so = new SerializedObject(displayPanel);
+                    so.FindProperty("m_OpenOnStart").boolValue = false;
+                    so.ApplyModifiedPropertiesWithoutUndo();
+                    EditorSceneManager.MarkSceneDirty(scene);
+                }
+            }
+            EditorSceneManager.SaveScene(scene);
+            Debug.Log("WELCOME_PANEL_AUTO_OPEN_DISABLED");
+        }
+
         static void RewireInventoryMenu<T>(string displayName) where T : InventoryPanelOpener
         {
             foreach (var opener in Object.FindObjectsByType<T>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {

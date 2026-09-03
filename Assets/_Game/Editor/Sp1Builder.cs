@@ -16,6 +16,7 @@ namespace Game.Editor
             PlayerPrefabBuilder.Build();
             CharacterCreationSceneBuilder.Build();
             MainMenuSceneBuilder.Build();
+            GameWorldMigrator.DisableWelcomePanelAutoOpen();
             ProjectVerifier.ConfigureBuildSettings();
             Debug.Log("SP1_BUILD_ALL_DONE");
         }
