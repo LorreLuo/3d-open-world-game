@@ -92,41 +92,13 @@ GameObject:
   - component: {fileID: 4956133787312900634}
   - component: {fileID: 757104432960802536}
   - component: {fileID: 4925366478365309961}
-  - component: {fileID: 1505078188587169163}
-  - component: {fileID: 547282458726405526}
-  - component: {fileID: 3223050350470081094}
-  - component: {fileID: 7284919335085248153}
-  - component: {fileID: 4141797224411739730}
-  - component: {fileID: 2420838605396640982}
-  - component: {fileID: 891478520722620881}
-  - component: {fileID: 3256741049422445438}
-  - component: {fileID: 3835986380382152886}
-  - component: {fileID: 4810605423219916040}
-  - component: {fileID: 8661857679513230333}
-  - component: {fileID: 4155888402472730291}
-  - component: {fileID: 7144355120209758539}
-  - component: {fileID: 9032853528828945811}
-  - component: {fileID: 7555523793795236445}
-  - component: {fileID: 4607980079903181805}
-  - component: {fileID: 7590759871285990469}
-  - component: {fileID: 1025330562590027135}
-  - component: {fileID: 1141773927673176148}
-  - component: {fileID: 2812414948830742964}
-  - component: {fileID: 4802863641315384239}
-  - component: {fileID: 5450995095549820117}
-  - component: {fileID: 6728629057280175898}
-  - component: {fileID: 3879792464320961227}
-  - component: {fileID: 7786718566595342179}
-  - component: {fileID: 8622224831787030874}
-  - component: {fileID: 5374762640987851811}
-  - component: {fileID: 386429745703631670}
-  - component: {fileID: 1609341618398424913}
-  - component: {fileID: 4405358180476318709}
-  - component: {fileID: 6286783441247964408}
-  - component: {fileID: 6038068959903319923}
-  - component: {fileID: 8244241811710488518}
-  - component: {fileID: 8796797286968910504}
-  - component: {fileID: 6036900878911825916}
+  - component: {fileID: 4649640254091463194}
+  - component: {fileID: 5578339673481056789}
+  - component: {fileID: 4937920801633958942}
+  - component: {fileID: 1360872741489229055}
+  - component: {fileID: 2893531813686668620}
+  - component: {fileID: 1812666726291028183}
+  - component: {fileID: 833484418891694618}
   m_Layer: 8
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -154,13 +126,7 @@ Transform:
   - {fileID: 2604974958428867557}
   - {fileID: 8764154453621922378}
   - {fileID: 2264539701805306316}
-  - {fileID: 2941140188213036037}
-  - {fileID: 2450792200863871152}
-  - {fileID: 7880950607459535502}
-  - {fileID: 8190529486737600260}
-  - {fileID: 6149501153897637577}
-  - {fileID: 9109650798606456385}
-  - {fileID: 2633990434136171698}
+  - {fileID: 8667536471942137726}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!95 &6499335824801364121
@@ -534,7 +500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerInput: {fileID: 2673195036689902235}
---- !u!114 &1505078188587169163
+--- !u!114 &4649640254091463194
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -551,7 +517,7 @@ MonoBehaviour:
   isLocalPlayer: 1
   displayName: 
   cachedComponentCount: 0
---- !u!114 &547282458726405526
+--- !u!114 &5578339673481056789
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -564,7 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Spark.Rules::RulesEntity
   ruleStates: []
---- !u!114 &3223050350470081094
+--- !u!114 &4937920801633958942
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -590,11 +556,11 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: KeyboardMouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &7284919335085248153
+--- !u!114 &1360872741489229055
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -651,8 +617,8 @@ MonoBehaviour:
   groundCheckRadius: 0.28
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 8
-  cameraFollowTarget: {fileID: 624615173020387066}
+    m_Bits: 4294967039
+  cameraFollowTarget: {fileID: 2291002127592959205}
   cameraName: PlayerFollowCamera
   followTarget: {fileID: 0}
   upwardAngleLimit: 70
@@ -673,7 +639,7 @@ MonoBehaviour:
   analogMovementEnabled: 0
   cursorLocked: 1
   enableCursorForLook: 1
---- !u!114 &4141797224411739730
+--- !u!114 &2893531813686668620
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -690,133 +656,7 @@ MonoBehaviour:
   inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   actionMapName: Player
   interactActionName: Interact
---- !u!114 &2420838605396640982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5b7874e5c8ed5e40bc9c3295801acf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Core::SparkEntity
-  idSource: 0
-  entityId: 
-  isLocalPlayer: 1
-  displayName: 
-  cachedComponentCount: 0
---- !u!114 &891478520722620881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a558d758c3a8dc4d89b191b725595fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Rules::RulesEntity
-  ruleStates: []
---- !u!114 &3256741049422445438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bc59bb3e11c6244d9e754baf397910f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.ThirdPersonController::SparkThirdPersonController
-  currentMovementState: 1
-  currentControllerState: 0
-  walkingSettings:
-    velocity: 2
-    leapHeight: 1
-    gravityForce: -15
-    leapCooldown: 0.6
-    fallGracePeriod: 0.15
-    enableRecoveryTime: 0
-    landingRecoveryDuration: 0.3
-    minimumFallVelocityForRecovery: -4
-  runningSettings:
-    velocity: 5.335
-    leapHeight: 1.2
-    gravityForce: -15
-    leapCooldown: 0.5
-    fallGracePeriod: 0.15
-    enableRecoveryTime: 0
-    landingRecoveryDuration: 0.5
-    minimumFallVelocityForRecovery: -5
-  sprintingSettings:
-    velocity: 8
-    leapHeight: 1.4
-    gravityForce: -18
-    leapCooldown: 0.4
-    fallGracePeriod: 0.1
-    enableRecoveryTime: 1
-    landingRecoveryDuration: 0.7
-    minimumFallVelocityForRecovery: -6
-  stateTransitionSpeed: 8
-  dodgeRollDuration: 0.5
-  dodgeRollCooldown: 1
-  enableDodgeRollCost: 0
-  dodgeRollCostStatId: 
-  dodgeRollCostAmount: 25
-  turningSmoothness: 0.12
-  velocityChangeRate: 10
-  landingSfx: {fileID: 0}
-  footstepSfxArray: []
-  footstepVolume: 0.5
-  isGrounded: 1
-  groundCheckOffset: -0.14
-  groundCheckRadius: 0.28
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  cameraFollowTarget: {fileID: 6464120750347786122}
-  cameraName: PlayerFollowCamera
-  followTarget: {fileID: 0}
-  upwardAngleLimit: 70
-  downwardAngleLimit: -30
-  cameraAngleAdjustment: 0
-  freezeCameraPosition: 0
-  characterUICameraPosition: {x: 0, y: 1.5, z: 2}
-  characterUICameraRotation: {x: 15, y: 180, z: 0}
-  cameraLockSpeed: 3
-  lockedCameraXRotation: 15
-  targetFacingSpeed: 8
-  strafeAnimationSpeed: 6
-  movementInput: {x: 0, y: 0}
-  cameraInput: {x: 0, y: 0}
-  leapInput: 0
-  sprintInput: 0
-  walkInput: 0
-  analogMovementEnabled: 0
-  cursorLocked: 1
-  enableCursorForLook: 1
---- !u!114 &3835986380382152886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0f15a4f85488f547b6807dd640b8c6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Core::InteractorEntity
-  cameraTransform: {fileID: 0}
-  targetingAngleThreshold: 30
-  inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  actionMapName: Player
-  interactActionName: Interact
---- !u!114 &4810605423219916040
+--- !u!114 &1812666726291028183
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -828,7 +668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98fb92980eac0c48aa23722aa4c4aba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Runtime::Game.Runtime.Character.PlayerCustomizationApplier
---- !u!114 &8661857679513230333
+--- !u!114 &833484418891694618
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -837,687 +677,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 208042332396922864}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5b7874e5c8ed5e40bc9c3295801acf9, type: 3}
+  m_Script: {fileID: 11500000, guid: 64f53e8eacf7182409afe655fb0a3ebb, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Spark.Core::SparkEntity
-  idSource: 0
-  entityId: 
-  isLocalPlayer: 1
-  displayName: 
-  cachedComponentCount: 0
---- !u!114 &4155888402472730291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a558d758c3a8dc4d89b191b725595fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Rules::RulesEntity
-  ruleStates: []
---- !u!114 &7144355120209758539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bc59bb3e11c6244d9e754baf397910f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.ThirdPersonController::SparkThirdPersonController
-  currentMovementState: 1
-  currentControllerState: 0
-  walkingSettings:
-    velocity: 2
-    leapHeight: 1
-    gravityForce: -15
-    leapCooldown: 0.6
-    fallGracePeriod: 0.15
-    enableRecoveryTime: 0
-    landingRecoveryDuration: 0.3
-    minimumFallVelocityForRecovery: -4
-  runningSettings:
-    velocity: 5.335
-    leapHeight: 1.2
-    gravityForce: -15
-    leapCooldown: 0.5
-    fallGracePeriod: 0.15
-    enableRecoveryTime: 0
-    landingRecoveryDuration: 0.5
-    minimumFallVelocityForRecovery: -5
-  sprintingSettings:
-    velocity: 8
-    leapHeight: 1.4
-    gravityForce: -18
-    leapCooldown: 0.4
-    fallGracePeriod: 0.1
-    enableRecoveryTime: 1
-    landingRecoveryDuration: 0.7
-    minimumFallVelocityForRecovery: -6
-  stateTransitionSpeed: 8
-  dodgeRollDuration: 0.5
-  dodgeRollCooldown: 1
-  enableDodgeRollCost: 0
-  dodgeRollCostStatId: 
-  dodgeRollCostAmount: 25
-  turningSmoothness: 0.12
-  velocityChangeRate: 10
-  landingSfx: {fileID: 0}
-  footstepSfxArray: []
-  footstepVolume: 0.5
-  isGrounded: 1
-  groundCheckOffset: -0.14
-  groundCheckRadius: 0.28
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  cameraFollowTarget: {fileID: 2986299805327595609}
-  cameraName: PlayerFollowCamera
-  followTarget: {fileID: 0}
-  upwardAngleLimit: 70
-  downwardAngleLimit: -30
-  cameraAngleAdjustment: 0
-  freezeCameraPosition: 0
-  characterUICameraPosition: {x: 0, y: 1.5, z: 2}
-  characterUICameraRotation: {x: 15, y: 180, z: 0}
-  cameraLockSpeed: 3
-  lockedCameraXRotation: 15
-  targetFacingSpeed: 8
-  strafeAnimationSpeed: 6
-  movementInput: {x: 0, y: 0}
-  cameraInput: {x: 0, y: 0}
-  leapInput: 0
-  sprintInput: 0
-  walkInput: 0
-  analogMovementEnabled: 0
-  cursorLocked: 1
-  enableCursorForLook: 1
---- !u!114 &9032853528828945811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0f15a4f85488f547b6807dd640b8c6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Core::InteractorEntity
-  cameraTransform: {fileID: 0}
-  targetingAngleThreshold: 30
-  inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_EditorClassIdentifier: Game.Runtime::Game.Runtime.Player.SparkInputFeeder
+  inputActions: {fileID: -944628639613478452, guid: 2e532bc967f22e244b6e2595c61f3391, type: 3}
   actionMapName: Player
-  interactActionName: Interact
---- !u!114 &7555523793795236445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f98fb92980eac0c48aa23722aa4c4aba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Runtime::Game.Runtime.Character.PlayerCustomizationApplier
---- !u!114 &4607980079903181805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5b7874e5c8ed5e40bc9c3295801acf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Core::SparkEntity
-  idSource: 0
-  entityId: 
-  isLocalPlayer: 1
-  displayName: 
-  cachedComponentCount: 0
---- !u!114 &7590759871285990469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a558d758c3a8dc4d89b191b725595fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Rules::RulesEntity
-  ruleStates: []
---- !u!114 &1025330562590027135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bc59bb3e11c6244d9e754baf397910f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.ThirdPersonController::SparkThirdPersonController
-  currentMovementState: 1
-  currentControllerState: 0
-  walkingSettings:
-    velocity: 2
-    leapHeight: 1
-    gravityForce: -15
-    leapCooldown: 0.6
-    fallGracePeriod: 0.15
-    enableRecoveryTime: 0
-    landingRecoveryDuration: 0.3
-    minimumFallVelocityForRecovery: -4
-  runningSettings:
-    velocity: 5.335
-    leapHeight: 1.2
-    gravityForce: -15
-    leapCooldown: 0.5
-    fallGracePeriod: 0.15
-    enableRecoveryTime: 0
-    landingRecoveryDuration: 0.5
-    minimumFallVelocityForRecovery: -5
-  sprintingSettings:
-    velocity: 8
-    leapHeight: 1.4
-    gravityForce: -18
-    leapCooldown: 0.4
-    fallGracePeriod: 0.1
-    enableRecoveryTime: 1
-    landingRecoveryDuration: 0.7
-    minimumFallVelocityForRecovery: -6
-  stateTransitionSpeed: 8
-  dodgeRollDuration: 0.5
-  dodgeRollCooldown: 1
-  enableDodgeRollCost: 0
-  dodgeRollCostStatId: 
-  dodgeRollCostAmount: 25
-  turningSmoothness: 0.12
-  velocityChangeRate: 10
-  landingSfx: {fileID: 0}
-  footstepSfxArray: []
-  footstepVolume: 0.5
-  isGrounded: 1
-  groundCheckOffset: -0.14
-  groundCheckRadius: 0.28
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  cameraFollowTarget: {fileID: 1058405796810090100}
-  cameraName: PlayerFollowCamera
-  followTarget: {fileID: 0}
-  upwardAngleLimit: 70
-  downwardAngleLimit: -30
-  cameraAngleAdjustment: 0
-  freezeCameraPosition: 0
-  characterUICameraPosition: {x: 0, y: 1.5, z: 2}
-  characterUICameraRotation: {x: 15, y: 180, z: 0}
-  cameraLockSpeed: 3
-  lockedCameraXRotation: 15
-  targetFacingSpeed: 8
-  strafeAnimationSpeed: 6
-  movementInput: {x: 0, y: 0}
-  cameraInput: {x: 0, y: 0}
-  leapInput: 0
-  sprintInput: 0
-  walkInput: 0
-  analogMovementEnabled: 0
-  cursorLocked: 1
-  enableCursorForLook: 1
---- !u!114 &1141773927673176148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0f15a4f85488f547b6807dd640b8c6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Core::InteractorEntity
-  cameraTransform: {fileID: 0}
-  targetingAngleThreshold: 30
-  inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  actionMapName: Player
-  interactActionName: Interact
---- !u!114 &2812414948830742964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f98fb92980eac0c48aa23722aa4c4aba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Runtime::Game.Runtime.Character.PlayerCustomizationApplier
---- !u!114 &4802863641315384239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5b7874e5c8ed5e40bc9c3295801acf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Core::SparkEntity
-  idSource: 0
-  entityId: 
-  isLocalPlayer: 1
-  displayName: 
-  cachedComponentCount: 0
---- !u!114 &5450995095549820117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a558d758c3a8dc4d89b191b725595fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Rules::RulesEntity
-  ruleStates: []
---- !u!114 &6728629057280175898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bc59bb3e11c6244d9e754baf397910f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.ThirdPersonController::SparkThirdPersonController
-  currentMovementState: 1
-  currentControllerState: 0
-  walkingSettings:
-    velocity: 2
-    leapHeight: 1
-    gravityForce: -15
-    leapCooldown: 0.6
-    fallGracePeriod: 0.15
-    enableRecoveryTime: 0
-    landingRecoveryDuration: 0.3
-    minimumFallVelocityForRecovery: -4
-  runningSettings:
-    velocity: 5.335
-    leapHeight: 1.2
-    gravityForce: -15
-    leapCooldown: 0.5
-    fallGracePeriod: 0.15
-    enableRecoveryTime: 0
-    landingRecoveryDuration: 0.5
-    minimumFallVelocityForRecovery: -5
-  sprintingSettings:
-    velocity: 8
-    leapHeight: 1.4
-    gravityForce: -18
-    leapCooldown: 0.4
-    fallGracePeriod: 0.1
-    enableRecoveryTime: 1
-    landingRecoveryDuration: 0.7
-    minimumFallVelocityForRecovery: -6
-  stateTransitionSpeed: 8
-  dodgeRollDuration: 0.5
-  dodgeRollCooldown: 1
-  enableDodgeRollCost: 0
-  dodgeRollCostStatId: 
-  dodgeRollCostAmount: 25
-  turningSmoothness: 0.12
-  velocityChangeRate: 10
-  landingSfx: {fileID: 0}
-  footstepSfxArray: []
-  footstepVolume: 0.5
-  isGrounded: 1
-  groundCheckOffset: -0.14
-  groundCheckRadius: 0.28
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  cameraFollowTarget: {fileID: 4959446575212492017}
-  cameraName: PlayerFollowCamera
-  followTarget: {fileID: 0}
-  upwardAngleLimit: 70
-  downwardAngleLimit: -30
-  cameraAngleAdjustment: 0
-  freezeCameraPosition: 0
-  characterUICameraPosition: {x: 0, y: 1.5, z: 2}
-  characterUICameraRotation: {x: 15, y: 180, z: 0}
-  cameraLockSpeed: 3
-  lockedCameraXRotation: 15
-  targetFacingSpeed: 8
-  strafeAnimationSpeed: 6
-  movementInput: {x: 0, y: 0}
-  cameraInput: {x: 0, y: 0}
-  leapInput: 0
-  sprintInput: 0
-  walkInput: 0
-  analogMovementEnabled: 0
-  cursorLocked: 1
-  enableCursorForLook: 1
---- !u!114 &3879792464320961227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0f15a4f85488f547b6807dd640b8c6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Core::InteractorEntity
-  cameraTransform: {fileID: 0}
-  targetingAngleThreshold: 30
-  inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  actionMapName: Player
-  interactActionName: Interact
---- !u!114 &7786718566595342179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f98fb92980eac0c48aa23722aa4c4aba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Runtime::Game.Runtime.Character.PlayerCustomizationApplier
---- !u!114 &8622224831787030874
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5b7874e5c8ed5e40bc9c3295801acf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Core::SparkEntity
-  idSource: 0
-  entityId: 
-  isLocalPlayer: 1
-  displayName: 
-  cachedComponentCount: 0
---- !u!114 &5374762640987851811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a558d758c3a8dc4d89b191b725595fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Rules::RulesEntity
-  ruleStates: []
---- !u!114 &386429745703631670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bc59bb3e11c6244d9e754baf397910f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.ThirdPersonController::SparkThirdPersonController
-  currentMovementState: 1
-  currentControllerState: 0
-  walkingSettings:
-    velocity: 2
-    leapHeight: 1
-    gravityForce: -15
-    leapCooldown: 0.6
-    fallGracePeriod: 0.15
-    enableRecoveryTime: 0
-    landingRecoveryDuration: 0.3
-    minimumFallVelocityForRecovery: -4
-  runningSettings:
-    velocity: 5.335
-    leapHeight: 1.2
-    gravityForce: -15
-    leapCooldown: 0.5
-    fallGracePeriod: 0.15
-    enableRecoveryTime: 0
-    landingRecoveryDuration: 0.5
-    minimumFallVelocityForRecovery: -5
-  sprintingSettings:
-    velocity: 8
-    leapHeight: 1.4
-    gravityForce: -18
-    leapCooldown: 0.4
-    fallGracePeriod: 0.1
-    enableRecoveryTime: 1
-    landingRecoveryDuration: 0.7
-    minimumFallVelocityForRecovery: -6
-  stateTransitionSpeed: 8
-  dodgeRollDuration: 0.5
-  dodgeRollCooldown: 1
-  enableDodgeRollCost: 0
-  dodgeRollCostStatId: 
-  dodgeRollCostAmount: 25
-  turningSmoothness: 0.12
-  velocityChangeRate: 10
-  landingSfx: {fileID: 0}
-  footstepSfxArray: []
-  footstepVolume: 0.5
-  isGrounded: 1
-  groundCheckOffset: -0.14
-  groundCheckRadius: 0.28
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  cameraFollowTarget: {fileID: 1545976342203110866}
-  cameraName: PlayerFollowCamera
-  followTarget: {fileID: 0}
-  upwardAngleLimit: 70
-  downwardAngleLimit: -30
-  cameraAngleAdjustment: 0
-  freezeCameraPosition: 0
-  characterUICameraPosition: {x: 0, y: 1.5, z: 2}
-  characterUICameraRotation: {x: 15, y: 180, z: 0}
-  cameraLockSpeed: 3
-  lockedCameraXRotation: 15
-  targetFacingSpeed: 8
-  strafeAnimationSpeed: 6
-  movementInput: {x: 0, y: 0}
-  cameraInput: {x: 0, y: 0}
-  leapInput: 0
-  sprintInput: 0
-  walkInput: 0
-  analogMovementEnabled: 0
-  cursorLocked: 1
-  enableCursorForLook: 1
---- !u!114 &1609341618398424913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0f15a4f85488f547b6807dd640b8c6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Core::InteractorEntity
-  cameraTransform: {fileID: 0}
-  targetingAngleThreshold: 30
-  inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  actionMapName: Player
-  interactActionName: Interact
---- !u!114 &4405358180476318709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f98fb92980eac0c48aa23722aa4c4aba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Runtime::Game.Runtime.Character.PlayerCustomizationApplier
---- !u!114 &6286783441247964408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5b7874e5c8ed5e40bc9c3295801acf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Core::SparkEntity
-  idSource: 0
-  entityId: 
-  isLocalPlayer: 1
-  displayName: 
-  cachedComponentCount: 0
---- !u!114 &6038068959903319923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a558d758c3a8dc4d89b191b725595fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Rules::RulesEntity
-  ruleStates: []
---- !u!114 &8244241811710488518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bc59bb3e11c6244d9e754baf397910f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.ThirdPersonController::SparkThirdPersonController
-  currentMovementState: 1
-  currentControllerState: 0
-  walkingSettings:
-    velocity: 2
-    leapHeight: 1
-    gravityForce: -15
-    leapCooldown: 0.6
-    fallGracePeriod: 0.15
-    enableRecoveryTime: 0
-    landingRecoveryDuration: 0.3
-    minimumFallVelocityForRecovery: -4
-  runningSettings:
-    velocity: 5.335
-    leapHeight: 1.2
-    gravityForce: -15
-    leapCooldown: 0.5
-    fallGracePeriod: 0.15
-    enableRecoveryTime: 0
-    landingRecoveryDuration: 0.5
-    minimumFallVelocityForRecovery: -5
-  sprintingSettings:
-    velocity: 8
-    leapHeight: 1.4
-    gravityForce: -18
-    leapCooldown: 0.4
-    fallGracePeriod: 0.1
-    enableRecoveryTime: 1
-    landingRecoveryDuration: 0.7
-    minimumFallVelocityForRecovery: -6
-  stateTransitionSpeed: 8
-  dodgeRollDuration: 0.5
-  dodgeRollCooldown: 1
-  enableDodgeRollCost: 0
-  dodgeRollCostStatId: 
-  dodgeRollCostAmount: 25
-  turningSmoothness: 0.12
-  velocityChangeRate: 10
-  landingSfx: {fileID: 0}
-  footstepSfxArray: []
-  footstepVolume: 0.5
-  isGrounded: 1
-  groundCheckOffset: -0.14
-  groundCheckRadius: 0.28
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  cameraFollowTarget: {fileID: 1262923465240386825}
-  cameraName: PlayerFollowCamera
-  followTarget: {fileID: 0}
-  upwardAngleLimit: 70
-  downwardAngleLimit: -30
-  cameraAngleAdjustment: 0
-  freezeCameraPosition: 0
-  characterUICameraPosition: {x: 0, y: 1.5, z: 2}
-  characterUICameraRotation: {x: 15, y: 180, z: 0}
-  cameraLockSpeed: 3
-  lockedCameraXRotation: 15
-  targetFacingSpeed: 8
-  strafeAnimationSpeed: 6
-  movementInput: {x: 0, y: 0}
-  cameraInput: {x: 0, y: 0}
-  leapInput: 0
-  sprintInput: 0
-  walkInput: 0
-  analogMovementEnabled: 0
-  cursorLocked: 1
-  enableCursorForLook: 1
---- !u!114 &8796797286968910504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0f15a4f85488f547b6807dd640b8c6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Spark.Core::InteractorEntity
-  cameraTransform: {fileID: 0}
-  targetingAngleThreshold: 30
-  inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  actionMapName: Player
-  interactActionName: Interact
---- !u!114 &6036900878911825916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208042332396922864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f98fb92980eac0c48aa23722aa4c4aba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Runtime::Game.Runtime.Character.PlayerCustomizationApplier
 --- !u!1 &310313867813979258
 GameObject:
   m_ObjectHideFlags: 0
@@ -1612,37 +776,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1932616786853083649}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &624615173020387066
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2941140188213036037}
-  m_Layer: 0
-  m_Name: CameraFollowTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2941140188213036037
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 624615173020387066}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3798861871865779683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &643582800978789942
 GameObject:
@@ -1837,37 +970,6 @@ Transform:
   - {fileID: 4873589167048277502}
   m_Father: {fileID: 7975184510508265459}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1058405796810090100
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8190529486737600260}
-  m_Layer: 0
-  m_Name: CameraFollowTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8190529486737600260
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1058405796810090100}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3798861871865779683}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1139606143711120659
 GameObject:
   m_ObjectHideFlags: 0
@@ -1932,37 +1034,6 @@ Transform:
   - {fileID: 2879647021807354333}
   m_Father: {fileID: 4318355738100486028}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1262923465240386825
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2633990434136171698}
-  m_Layer: 0
-  m_Name: CameraFollowTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2633990434136171698
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1262923465240386825}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3798861871865779683}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1354551254741702635
 GameObject:
   m_ObjectHideFlags: 0
@@ -2026,37 +1097,6 @@ Transform:
   m_Children:
   - {fileID: 3756346186351220551}
   m_Father: {fileID: 939118166405254301}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1545976342203110866
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9109650798606456385}
-  m_Layer: 0
-  m_Name: CameraFollowTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9109650798606456385
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1545976342203110866}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3798861871865779683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1890343452173817801
 GameObject:
@@ -2303,6 +1343,37 @@ Transform:
   - {fileID: 6588802581784430598}
   m_Father: {fileID: 6237151370185729430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2291002127592959205
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8667536471942137726}
+  m_Layer: 0
+  m_Name: CameraFollowTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8667536471942137726
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2291002127592959205}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3798861871865779683}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2317200409111198415
 GameObject:
   m_ObjectHideFlags: 0
@@ -2525,37 +1596,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3464036960972550212}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2986299805327595609
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7880950607459535502}
-  m_Layer: 0
-  m_Name: CameraFollowTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7880950607459535502
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2986299805327595609}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3798861871865779683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2994790004375722720
 GameObject:
@@ -3021,37 +2061,6 @@ Transform:
   m_Children:
   - {fileID: 4696701058152734748}
   m_Father: {fileID: 6837497831513346817}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4959446575212492017
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6149501153897637577}
-  m_Layer: 0
-  m_Name: CameraFollowTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6149501153897637577
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4959446575212492017}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3798861871865779683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5044323453957664239
 GameObject:
@@ -3570,37 +2579,6 @@ Transform:
   m_Children:
   - {fileID: 2566352764815423433}
   m_Father: {fileID: 6135153269215347940}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6464120750347786122
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2450792200863871152}
-  m_Layer: 0
-  m_Name: CameraFollowTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2450792200863871152
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6464120750347786122}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3798861871865779683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6681948524364347635
 GameObject:

@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using Opsive.UltimateInventorySystem.Demo.CharacterControl;
 using Opsive.UltimateInventorySystem.Demo.CharacterControl.Player;
 using Game.Runtime.Character;
+using Game.Runtime.Player;
 
 namespace Game.Editor
 {
@@ -24,21 +25,17 @@ namespace Game.Editor
             EnsureFolder("Assets/_Game/Prefabs/Player");
             EnsureFolder("Assets/_Game/Animations/Player");
 
-            // 只在首次创建时复制（CopyAsset 会重写 meta GUID，重复复制会破坏引用）
-            if (AssetDatabase.LoadAssetAtPath<GameObject>(TargetPrefab) == null) {
-                AssetDatabase.CopyAsset(SourcePrefab, TargetPrefab);
-            }
+            // 动画控制器只在首次创建时复制（避免 GUID 抖动破坏引用）
             if (AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(TargetAnimator) == null) {
                 AssetDatabase.CopyAsset(SourceAnimator, TargetAnimator);
             }
-            AssetDatabase.ImportAsset(TargetPrefab);
 
             var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(TargetAnimator);
             AddSparkParameters(controller);
 
-            // 编辑目标 prefab：保留 demo 的 Character/PlayerCharacter/DemoCharacterDamageable，
-            // 只关闭 demo 自身移动（Spark 控制器接管），再叠加 Spark 组件栈。
-            var root = PrefabUtility.LoadPrefabContents(TargetPrefab);
+            // 始终从 Demo 源预制体重建（覆盖同一路径、保留 meta/GUID）。
+            // 这样能自愈历史构建残留——例如曾误删 Opsive 输入子物体导致的坏预制体。
+            var root = PrefabUtility.LoadPrefabContents(SourcePrefab);
             root.tag = "Player";
 
             var playerCharacter = root.GetComponent<PlayerCharacter>();
@@ -65,16 +62,18 @@ namespace Game.Editor
 
             var tpc = root.AddComponent<SparkThirdPersonController>();
             var tpcSo = new SerializedObject(tpc);
-            var groundLayer = LayerMask.NameToLayer("Ground");
-            if (groundLayer >= 0) {
-                tpcSo.FindProperty("groundLayerMask").intValue = 1 << groundLayer;
-            }
+            // 地面检测排除玩家自身图层（Demo 玩家根在 Opsive 图层 8），其余图层全部视为地面。
+            // Demo 场景的地面在 Default 图层，此前只查 "Ground" 图层导致 isGrounded 恒为 false。
+            int groundMask = ~0 & ~(1 << root.layer);
+            tpcSo.FindProperty("groundLayerMask").intValue = groundMask;
             tpcSo.ApplyModifiedPropertiesWithoutUndo();
 
             var playerInput = root.GetComponent<PlayerInput>();
             if (playerInput == null) { playerInput = root.AddComponent<PlayerInput>(); }
             playerInput.actions = AssetDatabase.LoadAssetAtPath<InputActionAsset>(ThirdPersonInput);
             playerInput.defaultActionMap = "Player";
+            // 关键：指定控制方案，否则 PlayerInput.devices 为空 → 动作没有任何 controls → 键盘输入完全不生效。
+            playerInput.defaultControlScheme = "KeyboardMouse";
             playerInput.notificationBehavior = PlayerNotifications.SendMessages;
 
             var interactor = root.AddComponent<InteractorEntity>();
@@ -91,6 +90,13 @@ namespace Game.Editor
 
             // 外观应用器：出生时读取角色创建数据（换色/换装）
             root.AddComponent<PlayerCustomizationApplier>();
+
+            // 直接订阅输入动作驱动控制器，绕开 PlayerInput.SendMessages（与 Opsive 输入组件的冲突/时序问题）
+            var feeder = root.AddComponent<SparkInputFeeder>();
+            var feederSo = new SerializedObject(feeder);
+            feederSo.FindProperty("inputActions").objectReferenceValue =
+                AssetDatabase.LoadAssetAtPath<InputActionAsset>(ThirdPersonInput);
+            feederSo.ApplyModifiedPropertiesWithoutUndo();
 
             PrefabUtility.SaveAsPrefabAsset(root, TargetPrefab);
             PrefabUtility.UnloadPrefabContents(root);
