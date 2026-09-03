@@ -11,6 +11,7 @@ namespace Game.Editor
         [MenuItem("Game/Build/SP1 All")]
         public static void BuildAll()
         {
+            UiPrefabBuilder.BuildAll();
             DatabaseGenerator.Generate();
             PlayerPrefabBuilder.Build();
             CharacterCreationSceneBuilder.Build();

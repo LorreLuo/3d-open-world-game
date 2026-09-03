@@ -37,7 +37,13 @@ namespace Game.Runtime.Character
                 mat = renderer.material;
                 m_Materials.Add(partName, mat);
             }
-            mat.color = color;
+            // Demo 的 Toon 着色器颜色属性是 _BaseColorRGBOutlineWidthA（非标准 _Color），需按属性名写入
+            if (mat.HasProperty("_BaseColorRGBOutlineWidthA")) {
+                var v = mat.GetVector("_BaseColorRGBOutlineWidthA");
+                mat.SetVector("_BaseColorRGBOutlineWidthA", new Vector4(color.r, color.g, color.b, v.w));
+            } else {
+                mat.color = color;
+            }
         }
 
         public void ApplyOutfit(string outfitId)

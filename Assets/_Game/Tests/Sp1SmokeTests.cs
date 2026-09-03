@@ -3,6 +3,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.UI;
 using Game.Runtime.Character;
 
 namespace Game.Tests
@@ -22,6 +23,7 @@ namespace Game.Tests
             Assert.IsNotNull(flow, "角色创建场景缺少 CharacterCreationFlow。");
             Assert.IsNotNull(GameObject.Find("CharacterPreview"), "缺少预览角色。");
             Assert.IsNotNull(GameObject.Find("ConfirmButton"), "缺少确认按钮。");
+            Assert.IsNotNull(LoadingScreenManager.Instance, "角色创建场景缺少 LoadingScreenManager。");
         }
 
         [UnityTest]
@@ -66,11 +68,35 @@ namespace Game.Tests
             Assert.IsNotNull(preview, "缺少预览角色。");
             var hair = FindRenderer(preview.transform, "Hair");
             Assert.IsNotNull(hair, "预览缺 Hair 渲染器。");
-            Assert.AreEqual(CharacterCreationFlow.HairPresets[2], hair.material.color, "发色未应用到预览材质。");
+            Assert.AreEqual(CharacterCreationFlow.HairPresets[2], GetEffectiveColor(hair.material), "发色未应用到预览材质。");
 
             flow.ApplyOption("", 0, "Leather");
             var stitched = preview.transform.Find("LeatherArmor(Clone)");
             Assert.IsNotNull(stitched, "皮甲未缝合到预览。");
+        }
+
+        [UnityTest]
+        public IEnumerator Creation_ColorButton_Click_Changes_Preview()
+        {
+            LogAssert.ignoreFailingMessages = true;
+
+            SceneManager.LoadScene("CharacterCreation");
+            yield return null;
+            yield return null;
+
+            // 模拟真实点击路径：点第 3 个发色色块（HairSwatch2 = 金色）
+            var swatch = GameObject.Find("HairSwatch2");
+            Assert.IsNotNull(swatch, "缺少 HairSwatch2 色块。");
+            var btn = swatch.GetComponent<Button>();
+            Assert.IsNotNull(btn, "色块缺 Button 组件。");
+            btn.onClick.Invoke();
+            yield return null;
+
+            var preview = GameObject.Find("CharacterPreview");
+            Assert.IsNotNull(preview, "缺少预览角色。");
+            var hair = FindRenderer(preview.transform, "Hair");
+            Assert.IsNotNull(hair, "预览缺 Hair 渲染器。");
+            Assert.AreEqual(CharacterCreationFlow.HairPresets[2], GetEffectiveColor(hair.material), "点击色块后发色未变化。");
         }
 
         [UnityTest]
@@ -117,7 +143,7 @@ namespace Game.Tests
             Assert.IsNotNull(player, "找不到玩家实体。");
             var hair = FindRenderer(player.transform, "Hair");
             Assert.IsNotNull(hair, "玩家缺 Hair 渲染器。");
-            Assert.AreEqual(CharacterCreationFlow.HairPresets[2], hair.material.color, "玩家发色未应用自定义。");
+            Assert.AreEqual(CharacterCreationFlow.HairPresets[2], GetEffectiveColor(hair.material), "玩家发色未应用自定义。");
             var stitched = player.transform.Find("LeatherArmor(Clone)");
             Assert.IsNotNull(stitched, "玩家护甲未缝合。");
         }
@@ -129,6 +155,15 @@ namespace Game.Tests
                 if (renderers[i].name == name) { return renderers[i]; }
             }
             return null;
+        }
+
+        static Color GetEffectiveColor(Material mat)
+        {
+            if (mat.HasProperty("_BaseColorRGBOutlineWidthA")) {
+                var v = mat.GetVector("_BaseColorRGBOutlineWidthA");
+                return new Color(v.x, v.y, v.z);
+            }
+            return mat.color;
         }
     }
 }

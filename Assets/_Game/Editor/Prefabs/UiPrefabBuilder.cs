@@ -4,6 +4,7 @@ using Unity.Cinemachine;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Game.Runtime;
 
 namespace Game.Editor
 {
@@ -148,6 +149,9 @@ namespace Game.Editor
             slider.fillRect = fillRt;
             slider.targetGraphic = fillImg;
             slider.interactable = false;
+
+            // 跨场景存活：场景切换时 LoadingScreenManager 实例被销毁会导致 SceneLoader 协程抛 MissingReferenceException
+            root.AddComponent<PersistentRoot>();
 
             var mgr = root.AddComponent<LoadingScreenManager>();
             var so = new SerializedObject(mgr);

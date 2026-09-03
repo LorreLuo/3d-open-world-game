@@ -102,6 +102,11 @@ GameObject:
   - component: {fileID: 3256741049422445438}
   - component: {fileID: 3835986380382152886}
   - component: {fileID: 4810605423219916040}
+  - component: {fileID: 8661857679513230333}
+  - component: {fileID: 4155888402472730291}
+  - component: {fileID: 7144355120209758539}
+  - component: {fileID: 9032853528828945811}
+  - component: {fileID: 7555523793795236445}
   m_Layer: 8
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -131,6 +136,7 @@ Transform:
   - {fileID: 2264539701805306316}
   - {fileID: 2941140188213036037}
   - {fileID: 2450792200863871152}
+  - {fileID: 7880950607459535502}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!95 &6499335824801364121
@@ -787,6 +793,144 @@ MonoBehaviour:
   actionMapName: Player
   interactActionName: Interact
 --- !u!114 &4810605423219916040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208042332396922864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98fb92980eac0c48aa23722aa4c4aba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Runtime::Game.Runtime.Character.PlayerCustomizationApplier
+--- !u!114 &8661857679513230333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208042332396922864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b7874e5c8ed5e40bc9c3295801acf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Spark.Core::SparkEntity
+  idSource: 0
+  entityId: 
+  isLocalPlayer: 1
+  displayName: 
+  cachedComponentCount: 0
+--- !u!114 &4155888402472730291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208042332396922864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a558d758c3a8dc4d89b191b725595fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Spark.Rules::RulesEntity
+  ruleStates: []
+--- !u!114 &7144355120209758539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208042332396922864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bc59bb3e11c6244d9e754baf397910f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Spark.ThirdPersonController::SparkThirdPersonController
+  currentMovementState: 1
+  currentControllerState: 0
+  walkingSettings:
+    velocity: 2
+    leapHeight: 1
+    gravityForce: -15
+    leapCooldown: 0.6
+    fallGracePeriod: 0.15
+    enableRecoveryTime: 0
+    landingRecoveryDuration: 0.3
+    minimumFallVelocityForRecovery: -4
+  runningSettings:
+    velocity: 5.335
+    leapHeight: 1.2
+    gravityForce: -15
+    leapCooldown: 0.5
+    fallGracePeriod: 0.15
+    enableRecoveryTime: 0
+    landingRecoveryDuration: 0.5
+    minimumFallVelocityForRecovery: -5
+  sprintingSettings:
+    velocity: 8
+    leapHeight: 1.4
+    gravityForce: -18
+    leapCooldown: 0.4
+    fallGracePeriod: 0.1
+    enableRecoveryTime: 1
+    landingRecoveryDuration: 0.7
+    minimumFallVelocityForRecovery: -6
+  stateTransitionSpeed: 8
+  dodgeRollDuration: 0.5
+  dodgeRollCooldown: 1
+  enableDodgeRollCost: 0
+  dodgeRollCostStatId: 
+  dodgeRollCostAmount: 25
+  turningSmoothness: 0.12
+  velocityChangeRate: 10
+  landingSfx: {fileID: 0}
+  footstepSfxArray: []
+  footstepVolume: 0.5
+  isGrounded: 1
+  groundCheckOffset: -0.14
+  groundCheckRadius: 0.28
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  cameraFollowTarget: {fileID: 2986299805327595609}
+  cameraName: PlayerFollowCamera
+  followTarget: {fileID: 0}
+  upwardAngleLimit: 70
+  downwardAngleLimit: -30
+  cameraAngleAdjustment: 0
+  freezeCameraPosition: 0
+  characterUICameraPosition: {x: 0, y: 1.5, z: 2}
+  characterUICameraRotation: {x: 15, y: 180, z: 0}
+  cameraLockSpeed: 3
+  lockedCameraXRotation: 15
+  targetFacingSpeed: 8
+  strafeAnimationSpeed: 6
+  movementInput: {x: 0, y: 0}
+  cameraInput: {x: 0, y: 0}
+  leapInput: 0
+  sprintInput: 0
+  walkInput: 0
+  analogMovementEnabled: 0
+  cursorLocked: 1
+  enableCursorForLook: 1
+--- !u!114 &9032853528828945811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208042332396922864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0f15a4f85488f547b6807dd640b8c6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Spark.Core::InteractorEntity
+  cameraTransform: {fileID: 0}
+  targetingAngleThreshold: 30
+  inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  actionMapName: Player
+  interactActionName: Interact
+--- !u!114 &7555523793795236445
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1712,6 +1856,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3464036960972550212}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2986299805327595609
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7880950607459535502}
+  m_Layer: 0
+  m_Name: CameraFollowTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7880950607459535502
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2986299805327595609}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3798861871865779683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2994790004375722720
 GameObject:

@@ -13,6 +13,7 @@ namespace Game.Editor
     public static class CharacterCreationSceneBuilder
     {
         const string ScenePath = "Assets/_Game/Scenes/CharacterCreation.unity";
+        const string LoadingScreenPrefab = "Assets/_Game/Prefabs/UI/LoadingScreen.prefab";
         const string PlayerPrefab = "Assets/_Game/Prefabs/Player/PlayerCharacter.prefab";
         const string PreviewPrefab = "Assets/_Game/Prefabs/Character/CharacterPreview.prefab";
         const string LeatherArmorSource = "Assets/Samples/Opsive Ultimate Inventory System/1.3.8/Demo/Prefabs/Items/Armor/LeatherArmor.prefab";
@@ -92,11 +93,24 @@ namespace Game.Editor
             light.type = LightType.Directional;
             light.intensity = 1.2f;
 
-            // 预览角色
+            // 预览角色：按模型包围盒取景，让角色居中在画面里
             var previewPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(PreviewPrefab);
             var preview = (GameObject)PrefabUtility.InstantiatePrefab(previewPrefab);
             preview.name = "CharacterPreview";
-            preview.transform.position = new Vector3(0f, -1.1f, 0f);
+            preview.transform.position = Vector3.zero;
+
+            var previewRenderers = preview.GetComponentsInChildren<Renderer>(true);
+            var bounds = new Bounds(preview.transform.position, Vector3.zero);
+            foreach (var r in previewRenderers) { bounds.Encapsulate(r.bounds); }
+            var targetCenter = new Vector3(0f, 1.0f, 0f);
+            preview.transform.position += targetCenter - bounds.center;
+
+            // 相机取景（在预览定位之后再设）
+            camGo.transform.position = targetCenter + new Vector3(0f, 0.05f, 3.0f);
+            camGo.transform.LookAt(targetCenter);
+
+            // LoadingScreen（SceneLoader 硬依赖；跨场景存活由 PersistentRoot 保证）
+            PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(LoadingScreenPrefab));
 
             // EventSystem
             var esGo = new GameObject("EventSystem");
