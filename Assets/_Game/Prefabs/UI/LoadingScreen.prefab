@@ -600,7 +600,7 @@ MonoBehaviour:
   mustClickAfterLoading: 0
   delayAfterLoading: 0
   tipSwitchInterval: 3
-  fadeDuration: 0.5
+  fadeDuration: 0
   clickPromptText: {fileID: 3156977208092518869}
   clickPromptMessage: "\u70B9\u51FB\u7EE7\u7EED\u2026"
 --- !u!1 &6086955248020475583

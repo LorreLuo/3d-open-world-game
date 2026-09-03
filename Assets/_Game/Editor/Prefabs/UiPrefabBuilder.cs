@@ -174,7 +174,9 @@ namespace Game.Editor
             so.FindProperty("mustClickAfterLoading").boolValue = false;
             so.FindProperty("delayAfterLoading").floatValue = 0f;
             so.FindProperty("tipSwitchInterval").floatValue = 3f;
-            so.FindProperty("fadeDuration").floatValue = 0.5f;
+            // fadeDuration=0：淡出用 Time.deltaTime，目标场景若有菜单打开会把 timeScale 置 0 导致永不隐藏；
+            // 0 值跳过淡出循环，隐藏变为瞬时且不受 timeScale 影响。
+            so.FindProperty("fadeDuration").floatValue = 0f;
             so.FindProperty("clickPromptText").objectReferenceValue = prompt;
             so.FindProperty("clickPromptMessage").stringValue = "点击继续…";
             so.ApplyModifiedPropertiesWithoutUndo();
