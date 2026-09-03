@@ -111,6 +111,10 @@ namespace Game.Editor
             scaler.matchWidthOrHeight = 0.5f;
             root.AddComponent<GraphicRaycaster>();
             var cg = root.AddComponent<CanvasGroup>();
+            // 序列化为隐藏态：任何残留实例默认不可见，ShowLoadingScreen 时才置 1
+            cg.alpha = 0f;
+            cg.interactable = false;
+            cg.blocksRaycasts = false;
 
             var bgGo = CreateImage(root.transform, "BackgroundImage", new Color(0.06f, 0.07f, 0.10f, 1f));
             var fadeGo = CreateImage(root.transform, "FadeImage", new Color(0f, 0f, 0f, 0f));
@@ -150,8 +154,8 @@ namespace Game.Editor
             slider.targetGraphic = fillImg;
             slider.interactable = false;
 
-            // 跨场景存活：场景切换时 LoadingScreenManager 实例被销毁会导致 SceneLoader 协程抛 MissingReferenceException
-            root.AddComponent<PersistentRoot>();
+            // 跨场景存活且去重：只有第一个实例 DDOL，重复实例销毁（避免残留可见加载界面）
+            root.AddComponent<LoadingScreenPersistent>();
 
             var mgr = root.AddComponent<LoadingScreenManager>();
             var so = new SerializedObject(mgr);
