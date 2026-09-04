@@ -9,6 +9,7 @@ using Opsive.UltimateInventorySystem.UI.Menus.Chest;
 using Opsive.UltimateInventorySystem.UI.Panels;
 using Game.Bridge;
 using Game.Runtime;
+using Game.Runtime.Save;
 using Object = UnityEngine.Object;
 
 namespace Game.Editor
@@ -89,7 +90,8 @@ namespace Game.Editor
         }
 
         /// <summary>
-        /// 给 GameWorld 场景添加运行时引导组件：恢复 timeScale 并关闭 Demo 欢迎面板（它自动打开会把时间暂停导致无法移动）。
+        /// 给 GameWorld 场景添加运行时引导组件：恢复 timeScale 并关闭 Demo 欢迎面板（它自动打开会把时间暂停导致无法移动），
+        /// 并添加进入场景自动存档组件（SP2）。
         /// </summary>
         [MenuItem("Game/Build/Add GameWorld Bootstrap")]
         public static void AddGameWorldBootstrap()
@@ -101,6 +103,15 @@ namespace Game.Editor
                 go.AddComponent<GameWorldBootstrap>();
                 EditorSceneManager.MarkSceneDirty(scene);
             }
+
+            // SP2：进入 GameWorld 时自动存档（角色外观 + 玩家位置 + 场景）
+            var autoSaveExisting = Object.FindObjectsByType<GameWorldAutoSave>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            if (autoSaveExisting.Length == 0) {
+                var autoSaveGo = new GameObject("GameWorldAutoSave");
+                autoSaveGo.AddComponent<GameWorldAutoSave>();
+                EditorSceneManager.MarkSceneDirty(scene);
+            }
+
             EditorSceneManager.SaveScene(scene);
             Debug.Log("GAMEWORLD_BOOTSTRAP_ADDED");
         }

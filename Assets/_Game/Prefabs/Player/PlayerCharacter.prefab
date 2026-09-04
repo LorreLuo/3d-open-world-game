@@ -92,13 +92,13 @@ GameObject:
   - component: {fileID: 4956133787312900634}
   - component: {fileID: 757104432960802536}
   - component: {fileID: 4925366478365309961}
-  - component: {fileID: 4649640254091463194}
-  - component: {fileID: 5578339673481056789}
-  - component: {fileID: 4937920801633958942}
-  - component: {fileID: 1360872741489229055}
-  - component: {fileID: 2893531813686668620}
-  - component: {fileID: 1812666726291028183}
-  - component: {fileID: 833484418891694618}
+  - component: {fileID: 8073664744848938413}
+  - component: {fileID: 8081983162775220615}
+  - component: {fileID: 7106094066342213284}
+  - component: {fileID: 7137997548392852636}
+  - component: {fileID: 1898168679809761315}
+  - component: {fileID: 7121472424837790202}
+  - component: {fileID: 6300585191466707532}
   m_Layer: 8
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -126,7 +126,7 @@ Transform:
   - {fileID: 2604974958428867557}
   - {fileID: 8764154453621922378}
   - {fileID: 2264539701805306316}
-  - {fileID: 8667536471942137726}
+  - {fileID: 8633667608423174542}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!95 &6499335824801364121
@@ -500,7 +500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerInput: {fileID: 2673195036689902235}
---- !u!114 &4649640254091463194
+--- !u!114 &8073664744848938413
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -517,7 +517,7 @@ MonoBehaviour:
   isLocalPlayer: 1
   displayName: 
   cachedComponentCount: 0
---- !u!114 &5578339673481056789
+--- !u!114 &8081983162775220615
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Spark.Rules::RulesEntity
   ruleStates: []
---- !u!114 &4937920801633958942
+--- !u!114 &7106094066342213284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -560,7 +560,7 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &1360872741489229055
+--- !u!114 &7137997548392852636
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -618,7 +618,7 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 4294967039
-  cameraFollowTarget: {fileID: 2291002127592959205}
+  cameraFollowTarget: {fileID: 4615073612159784173}
   cameraName: PlayerFollowCamera
   followTarget: {fileID: 0}
   upwardAngleLimit: 70
@@ -639,7 +639,7 @@ MonoBehaviour:
   analogMovementEnabled: 0
   cursorLocked: 1
   enableCursorForLook: 1
---- !u!114 &2893531813686668620
+--- !u!114 &1898168679809761315
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -656,7 +656,7 @@ MonoBehaviour:
   inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   actionMapName: Player
   interactActionName: Interact
---- !u!114 &1812666726291028183
+--- !u!114 &7121472424837790202
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -668,7 +668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98fb92980eac0c48aa23722aa4c4aba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Runtime::Game.Runtime.Character.PlayerCustomizationApplier
---- !u!114 &833484418891694618
+--- !u!114 &6300585191466707532
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1342,37 +1342,6 @@ Transform:
   - {fileID: 6862665710522625339}
   - {fileID: 6588802581784430598}
   m_Father: {fileID: 6237151370185729430}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2291002127592959205
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8667536471942137726}
-  m_Layer: 0
-  m_Name: CameraFollowTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8667536471942137726
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2291002127592959205}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3798861871865779683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2317200409111198415
 GameObject:
@@ -2061,6 +2030,37 @@ Transform:
   m_Children:
   - {fileID: 4696701058152734748}
   m_Father: {fileID: 6837497831513346817}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4615073612159784173
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8633667608423174542}
+  m_Layer: 0
+  m_Name: CameraFollowTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8633667608423174542
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4615073612159784173}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3798861871865779683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5044323453957664239
 GameObject:

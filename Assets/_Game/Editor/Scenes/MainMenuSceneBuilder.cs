@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 using Game.Runtime.MainMenu;
+using Game.Runtime.Save;
 
 namespace Game.Editor
 {
@@ -15,6 +16,7 @@ namespace Game.Editor
         const string ScenePath = "Assets/_Game/Scenes/MainMenu.unity";
         const string LoadingScreenPrefab = "Assets/_Game/Prefabs/UI/LoadingScreen.prefab";
         const string CharacterCreationEntry = "Assets/_Game/Data/Resources/Database/Scenes/CharacterCreation.asset";
+        const string GameWorldEntry = "Assets/_Game/Data/Resources/Database/Scenes/GameWorld.asset";
         const string KeybindRowPrefab = "Assets/Blink/Spark/Core/Plugins/GameSettings/Runtime/UI Prefabs/KeybindRow.prefab";
         const string KeybindCategoryTitlePrefab = "Assets/Blink/Spark/Core/Plugins/GameSettings/Runtime/UI Prefabs/KeybindCategoryTitle.prefab";
 
@@ -66,10 +68,20 @@ namespace Game.Editor
             UiPrefabBuilder.CreateText(panel.transform, "Subtitle", "Spark × Ultimate Inventory System 演示", 32,
                 UiPrefabBuilder.Normalized(0.5f, 0.73f), font, TextAlignmentOptions.Center);
 
-            var newGameBtn = CreateButton(panel.transform, "NewGameButton", "新游戏", 0.55f, font);
-            var continueBtn = CreateButton(panel.transform, "ContinueButton", "继续游戏", 0.46f, font);
-            var settingsBtn = CreateButton(panel.transform, "SettingsButton", "设置", 0.37f, font);
-            var quitBtn = CreateButton(panel.transform, "QuitButton", "退出游戏", 0.28f, font);
+            // 3 个存档槽（新游戏/继续/删除）
+            var slotButtons = new Button[3];
+            var slotDeleteButtons = new Button[3];
+            var slotLabels = new TextMeshProUGUI[3];
+            for (int i = 0; i < 3; i++) {
+                float y = 0.58f - i * 0.14f;
+                var (slotBtn, deleteBtn, label) = CreateSlotRow(panel.transform, i, y, font);
+                slotButtons[i] = slotBtn;
+                slotDeleteButtons[i] = deleteBtn;
+                slotLabels[i] = label;
+            }
+
+            var settingsBtn = CreateButton(panel.transform, "SettingsButton", "设置", 0.16f, font);
+            var quitBtn = CreateButton(panel.transform, "QuitButton", "退出游戏", 0.06f, font);
 
             // 设置面板
             BuildGameSettingsPanel(canvasGo.transform, font);
@@ -77,17 +89,41 @@ namespace Game.Editor
             // LoadingScreen 实例
             PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(LoadingScreenPrefab));
 
-            // 流程控制
+            // 流程控制：存档槽（SaveSlotsFlow）+ 设置/退出（MainMenuFlow）
+            var slotsFlowGo = new GameObject("SaveSlotsFlow");
+            var slotsFlow = slotsFlowGo.AddComponent<SaveSlotsFlow>();
+            var slotsSo = new SerializedObject(slotsFlow);
+            var slotButtonsProp = slotsSo.FindProperty("m_SlotButtons");
+            var slotDeleteProp = slotsSo.FindProperty("m_DeleteButtons");
+            var slotLabelsProp = slotsSo.FindProperty("m_SlotLabels");
+            for (int i = 0; i < 3; i++) {
+                slotButtonsProp.GetArrayElementAtIndex(i).objectReferenceValue = slotButtons[i];
+                slotDeleteProp.GetArrayElementAtIndex(i).objectReferenceValue = slotDeleteButtons[i];
+                slotLabelsProp.GetArrayElementAtIndex(i).objectReferenceValue = slotLabels[i];
+            }
+            slotsSo.FindProperty("m_CharacterCreationSceneEntry").objectReferenceValue =
+                AssetDatabase.LoadAssetAtPath<SceneEntry>(CharacterCreationEntry);
+            slotsSo.FindProperty("m_GameWorldSceneEntry").objectReferenceValue =
+                AssetDatabase.LoadAssetAtPath<SceneEntry>(GameWorldEntry);
+            slotsSo.ApplyModifiedPropertiesWithoutUndo();
+
+            // 槽位/删除按钮绑定 SaveSlotButton（运行时按索引转发到 SaveSlotsFlow）
+            for (int i = 0; i < 3; i++) {
+                var slotCmp = slotButtons[i].gameObject.AddComponent<SaveSlotButton>();
+                var slotCmpSo = new SerializedObject(slotCmp);
+                slotCmpSo.FindProperty("m_SlotIndex").intValue = i;
+                slotCmpSo.FindProperty("m_IsDelete").boolValue = false;
+                slotCmpSo.ApplyModifiedPropertiesWithoutUndo();
+
+                var delCmp = slotDeleteButtons[i].gameObject.AddComponent<SaveSlotButton>();
+                var delCmpSo = new SerializedObject(delCmp);
+                delCmpSo.FindProperty("m_SlotIndex").intValue = i;
+                delCmpSo.FindProperty("m_IsDelete").boolValue = true;
+                delCmpSo.ApplyModifiedPropertiesWithoutUndo();
+            }
+
             var flowGo = new GameObject("MainMenuFlow");
             var flow = flowGo.AddComponent<MainMenuFlow>();
-            var flowSo = new SerializedObject(flow);
-            flowSo.FindProperty("m_CharacterCreationSceneEntry").objectReferenceValue =
-                AssetDatabase.LoadAssetAtPath<SceneEntry>(CharacterCreationEntry);
-            flowSo.FindProperty("m_ContinueButton").objectReferenceValue = continueBtn.GetComponent<Button>();
-            flowSo.ApplyModifiedPropertiesWithoutUndo();
-
-            UnityEventTools.AddPersistentListener(newGameBtn.GetComponent<Button>().onClick, flow.OnNewGame);
-            UnityEventTools.AddPersistentListener(continueBtn.GetComponent<Button>().onClick, flow.OnContinue);
             UnityEventTools.AddPersistentListener(settingsBtn.GetComponent<Button>().onClick, flow.OnSettings);
             UnityEventTools.AddPersistentListener(quitBtn.GetComponent<Button>().onClick, flow.OnQuit);
 
@@ -120,6 +156,23 @@ namespace Game.Editor
             text.alignment = TextAlignmentOptions.Center;
             text.text = label;
             return go;
+        }
+
+        static (Button, Button, TextMeshProUGUI) CreateSlotRow(Transform parent, int index, float y01, TMP_FontAsset font)
+        {
+            var slotBtn = CreateButton(parent, $"Slot{index}Button", $"空槽位 {index + 1}", y01, font);
+            var slotRect = slotBtn.GetComponent<RectTransform>();
+            slotRect.sizeDelta = new Vector2(520, 72);
+            slotRect.anchoredPosition = new Vector2(-80, (y01 - 0.5f) * 1080f);
+            var labelText = slotBtn.transform.Find("Label").GetComponent<TextMeshProUGUI>();
+
+            var delBtn = CreateButton(parent, $"Slot{index}DeleteButton", "删除", y01, font);
+            var delRect = delBtn.GetComponent<RectTransform>();
+            delRect.sizeDelta = new Vector2(120, 56);
+            delRect.anchoredPosition = new Vector2(260, (y01 - 0.5f) * 1080f);
+            delBtn.SetActive(false); // 空槽位不显示删除；SaveSlotsFlow 刷新时按需激活
+
+            return (slotBtn.GetComponent<Button>(), delBtn.GetComponent<Button>(), labelText);
         }
 
         static void BuildGameSettingsPanel(Transform canvasTransform, TMP_FontAsset font)
